@@ -1,0 +1,47 @@
+{
+  "date_beijing": "2026-11-02",
+  "status": "incomplete_stopped_by_user_request",
+  "source_commit": "50bb440",
+  "evidence": "Saved notebook stdout; full runtime report files were not exported",
+  "notebook_sha256": "dbfd93387a47591f3b5c170a1d1f0cd618f5d3141949dcf853fb3d5647c6e715",
+  "gpu": "NVIDIA A100-SXM4-40GB",
+  "python": "3.11.13",
+  "torch": "2.6.0+cu124",
+  "transformers": "4.57.6",
+  "attention_backend": "SDPA math; deterministic replay configuration",
+  "setup_seconds": 118.7,
+  "ar_train": {
+    "status": "completed",
+    "end_step": 20,
+    "elapsed_seconds": 135.40462813299996,
+    "train_peak_allocated_gib": 8.713295936584473,
+    "restore_seconds": null,
+    "step20_matches": null,
+    "step20_stats_match": null,
+    "checkpoint_bytes": 5928772552
+  },
+  "ar_resume": {
+    "status": "started_no_completion_record"
+  },
+  "dlm_train": {
+    "status": "no_start_or_completion_record"
+  },
+  "dlm_resume": {
+    "status": "no_start_or_completion_record"
+  },
+  "resources": {
+    "active_sessions_after_stop": 0,
+    "cu_rate_after_stop": 0,
+    "cu_rate_during_run": 6.73,
+    "estimated_cu_used_from_displayed_balance": 0.54,
+    "stage_cap_cu": 2
+  },
+  "checkpoint_retained": false,
+  "limitations": [
+    "135.4 seconds is the whole AR train-phase process, not pure optimizer time.",
+    "Only the printed summary survives, not per-step losses or full training report.",
+    "The checkpoint byte count refers to the step-19 checkpoint saved for replay.",
+    "No completed GPU replay verification, DLM training result, or quality score.",
+    "No training was started or continued during the follow-up audit."
+  ]
+}
