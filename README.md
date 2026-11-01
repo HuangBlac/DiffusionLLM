@@ -2,6 +2,8 @@
 
 A small, reproducible exploration of adapting an autoregressive language model to masked denoising, with explicit experimental limits.
 
+**Project deliverables:** a coherent diffusion LLM note and a reproduction of one specific result from the Dream paper, with resources planned against its original settings. The existing 200-step comparison is a preliminary experiment, not the final reproduction deliverable. The particular figure/metric and resource budget remain to be selected. See [deliverables and acceptance criteria](docs/deliverables.md).
+
 **Current status (2026-11-01):** a real-weight Qwen2.5-0.5B comparison is complete: shifted and same-position denoising, 200 updates each. Held-out denoising loss decreased, while greedy iterative generation remained highly repetitive. No completed 7B adaptation or Dream reproduction is claimed.
 
 At 50% masking, held-out CE changed from **17.36 to 5.23** nats for shifted prediction and **15.20 to 5.49** for same-position prediction. These single-seed results cover 32 sequences and do not establish general language quality. [Full results and all fixed-prompt samples](docs/pilot-results.md).
