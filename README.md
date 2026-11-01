@@ -15,6 +15,7 @@ At 50% masking, held-out CE changed from **17.36 to 5.23** nats for shifted pred
 | 100-token absorbing-mask check and one synthetic GPU update | `results/hardware-2026-10-29/colab-check-results.json` | Empirical masking marginals and a working backward/update path |
 | A100/G4, Qwen2.5-7B-shaped random weights, frozen BF16 base + FP32 LoRA | `results/hardware-2026-10-29/` | Short-run throughput and memory under the tested configuration |
 | Qwen2.5-0.5B pretrained weights: shifted vs same-position denoising | [Protocol](docs/experiment-design.md), [results](docs/pilot-results.md) | Short adaptation reduces masked CE; repetitive generation remains a failure |
+| Fixed 200-step checkpoints: reveal 1 vs 8 tokens per round | [All outputs and measurements](docs/sampling-group-size-results.md) | Smaller reveal groups change repetition patterns but do not resolve degeneration |
 
 The hardware measurements used random weights and synthetic tokens. They must not be described as pretrained model training or a Dream reproduction. Colab billing rates were observations on 2026-10-29, not current quotations.
 
@@ -35,6 +36,14 @@ On the original Windows host, `python -s` excludes conflicting user-site package
 The training script performs behavioral attention checks, evaluates fixed held-out masks, records every training update, saves adapter checkpoints locally and exports metrics plus all fixed-prompt samples into `results/`. Failed runs must not be reported as completed results.
 
 Verified locally: four correctness tests passed, including target alignment, hidden-target non-leakage, future-token attention behavior and trainable parameter scope. Selected train/validation/test sequences have no exact token-sequence overlap. The report builder verifies matched seeds, masks, supervised token counts, training budgets and provenance across both completed runs. Peak allocated GPU memory was approximately 1.29 GiB on an RTX 3050 Laptop GPU; no Colab compute was used for this small-model pilot.
+
+To reproduce the inference-only sampling comparison after the two local checkpoints exist:
+
+```sh
+python -s -m experiments.compare_sampling --repeats 3
+```
+
+This verifies checkpoint hashes and exact historical sample reproduction before comparing 12 fixed prompts per checkpoint. Both conditions retain greedy, highest-confidence-first selection, 32 output tokens and the historical EOS exclusion. The 1-token groups require 32 forwards versus 4 for 8-token groups. All 8 objective/sampling tests passed; no training or Colab compute was used. Repeated 4-token fragments remained common (shift: 69.0% vs 82.2%; same: 78.7% vs 82.5%), so lower repetition must not be equated with coherent generation. The raw JSON includes reveal traces and three identical-output timing repetitions for every condition.
 
 ## Historical hardware run
 
