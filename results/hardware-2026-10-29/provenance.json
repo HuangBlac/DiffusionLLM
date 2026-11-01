@@ -1,0 +1,27 @@
+{
+  "redacted_fields": [
+    "a100_notebook",
+    "account_after_tests",
+    "account_ui",
+    "colab_url",
+    "g4_notebook"
+  ],
+  "files": {
+    "a100-7b-benchmark.json": {
+      "source_sha256": "57f1be683ffdc0de2d202bb4e9b7fe0fe8ddccdffbf32c5a30fbf9c23b230e2e",
+      "public_sha256": "bf100263cfd4d68fd9f6fb0d2c6e545dfe14a50095e76c7c7cf00dfcd4dfc659"
+    },
+    "g4-7b-benchmark.json": {
+      "source_sha256": "79741ada34f72549ea3d8cc80ecb5a7cf5d8aa27f7ab438f33d50a2a16e0f9a9",
+      "public_sha256": "80e3aba9b1a930205dfb8af1cf905096c902406167755d5aadca8fdc06f5300f"
+    },
+    "a100-g4-comparison.json": {
+      "source_sha256": "737322bb04e1a25e710dd4acabaac31bdfbc97b42a8455f583b813d1c5ec8fb2",
+      "public_sha256": "b91188797ed6968bdef9515312cced284f0059ade9aaab37f3f46cc00c11b3f1"
+    },
+    "colab-check-results.json": {
+      "source_sha256": "a2df3f315ead16c6afca75bdcf0c2451f9b42fb5819ddbc1f2055fc3abe2dffc",
+      "public_sha256": "2dbc411dd2c13d3c3d7b776fb20ccdc08f0c766f1b0ed8614b4cecf55d86d429"
+    }
+  }
+}

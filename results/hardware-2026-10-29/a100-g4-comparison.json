@@ -1,0 +1,95 @@
+{
+  "tested_date": "2026-10-29",
+  "comparison_checks": "source, config, versions and parameter counts match",
+  "parameter_count": 7655986688,
+  "trainable_parameters": 40370176,
+  "rows": [
+    {
+      "gpu": "NVIDIA A100-SXM4-40GB",
+      "batch": 1,
+      "sequence_length": 512,
+      "units_per_hour": 5.3,
+      "mean_step_seconds": 0.3955466671000039,
+      "median_step_seconds": 0.3915426129999986,
+      "input_tokens_per_second": 1294.4111089439514,
+      "input_tokens_per_compute_unit": 879222.640037401,
+      "units_per_million_input_tokens": 1.1373683461534398,
+      "peak_allocated_gib": 15.313064098358154,
+      "peak_reserved_gib": 15.51171875
+    },
+    {
+      "gpu": "NVIDIA A100-SXM4-40GB",
+      "batch": 1,
+      "sequence_length": 1024,
+      "units_per_hour": 5.3,
+      "mean_step_seconds": 0.42763315320000006,
+      "median_step_seconds": 0.4274223409999962,
+      "input_tokens_per_second": 2394.575800162727,
+      "input_tokens_per_compute_unit": 1626504.3170916638,
+      "units_per_million_input_tokens": 0.6148154600585937,
+      "peak_allocated_gib": 15.933427810668945,
+      "peak_reserved_gib": 16.34375
+    },
+    {
+      "gpu": "NVIDIA A100-SXM4-40GB",
+      "batch": 4,
+      "sequence_length": 1024,
+      "units_per_hour": 5.3,
+      "mean_step_seconds": 1.388544688400006,
+      "median_step_seconds": 1.3881900274999879,
+      "input_tokens_per_second": 2949.851044923692,
+      "input_tokens_per_compute_unit": 2003672.4078726966,
+      "units_per_million_input_tokens": 0.4990835807644335,
+      "peak_allocated_gib": 19.43393611907959,
+      "peak_reserved_gib": 20.7734375
+    },
+    {
+      "gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition",
+      "batch": 1,
+      "sequence_length": 512,
+      "units_per_hour": 8.9,
+      "mean_step_seconds": 0.1474046087000147,
+      "median_step_seconds": 0.14737650600005736,
+      "input_tokens_per_second": 3473.432781480929,
+      "input_tokens_per_compute_unit": 1404984.046441724,
+      "units_per_million_input_tokens": 0.7117518540745068,
+      "peak_allocated_gib": 15.312392711639404,
+      "peak_reserved_gib": 15.51953125
+    },
+    {
+      "gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition",
+      "batch": 1,
+      "sequence_length": 1024,
+      "units_per_hour": 8.9,
+      "mean_step_seconds": 0.24358741659998487,
+      "median_step_seconds": 0.24318909400000166,
+      "input_tokens_per_second": 4203.8296324706935,
+      "input_tokens_per_compute_unit": 1700425.4693139885,
+      "units_per_million_input_tokens": 0.5880881097384617,
+      "peak_allocated_gib": 15.932756423950195,
+      "peak_reserved_gib": 16.3515625
+    },
+    {
+      "gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition",
+      "batch": 4,
+      "sequence_length": 1024,
+      "units_per_hour": 8.9,
+      "mean_step_seconds": 0.9216052822999927,
+      "median_step_seconds": 0.9213427615,
+      "input_tokens_per_second": 4444.418970535703,
+      "input_tokens_per_compute_unit": 1797742.5049357899,
+      "units_per_million_input_tokens": 0.5562531882371647,
+      "peak_allocated_gib": 19.434882164001465,
+      "peak_reserved_gib": 20.75390625
+    }
+  ],
+  "limitations": [
+    "Random weights and synthetic inputs; no pretrained Qwen checkpoint was downloaded.",
+    "BF16 frozen base and FP32 LoRA, not QLoRA or full-parameter training.",
+    "Bidirectional SDPA and same-position masked-token loss; not a validated AR-to-diffusion recipe.",
+    "Each shape: 3 warmup updates, 10 measured updates; no multi-session replication.",
+    "Only masked-position logits are materialized. No dataset loading, checkpoint saves or evaluation in timings.",
+    "Memory peaks cover the measurement stage after warmup, not initial model allocation.",
+    "Per-unit costs extrapolate observed short-run throughput; actual end-to-end training costs can be higher."
+  ]
+}

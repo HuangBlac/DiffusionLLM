@@ -1,0 +1,52 @@
+{
+  "verified_date": "2026-10-29",
+  "runtime": {
+    "python": "3.13.16",
+    "torch": "2.11.0+cu130",
+    "cuda_available": true,
+    "torch_cuda_version": "13.0",
+    "gpu": "NVIDIA L4",
+    "gpu_total_gib": 22.03,
+    "gpu_free_gib_before_test": 21.84,
+    "bf16_supported": true
+  },
+  "masking_experiment": {
+    "samples": 10000,
+    "length": 100,
+    "expected_mask_count": 50,
+    "direct_mean": 49.98910140991211,
+    "staged_mean": 49.96419906616211,
+    "direct_std": 5.013271808624268,
+    "staged_std": 4.957859992980957,
+    "absorbing_property": true
+  },
+  "training_smoke": {
+    "parameters": 49892352,
+    "input_shape": [
+      1,
+      100
+    ],
+    "hidden_shape": [
+      1,
+      100,
+      768
+    ],
+    "output_shape": [
+      1,
+      100,
+      58706
+    ],
+    "masked_count": 41,
+    "loss": 9.334033966064453,
+    "gradient_norm": 8.173343658447266,
+    "position_parameter_max_change": 9.999977191910148e-05,
+    "elapsed_seconds": 1.561,
+    "peak_allocated_gib": 1.119
+  },
+  "limits": [
+    "Synthetic tokens, random initialization, single update only.",
+    "Not Qwen fine-tuning or natural-language ability evaluation.",
+    "Compute units and hourly consumption are observed snapshots.",
+    "Elapsed time excludes model allocation and is not a steady-state throughput benchmark."
+  ]
+}
