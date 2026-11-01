@@ -1,0 +1,1598 @@
+{
+  "status": "completed",
+  "alignment": "same",
+  "seed": 20261101,
+  "steps": 200,
+  "batch_size": 1,
+  "sequence_tokens": 128,
+  "training_tokens": 25600,
+  "test_examples": 32,
+  "model": "Qwen/Qwen2.5-0.5B",
+  "trainable_parameters": 4400000,
+  "gpu": "NVIDIA GeForce RTX 3050 Laptop GPU",
+  "torch": "2.6.0+cu124",
+  "transformers": "4.57.6",
+  "python": "3.12.3",
+  "dtype": "torch.bfloat16",
+  "learning_rate": 0.0001,
+  "lora_rank": 8,
+  "lora_alpha": 16,
+  "mask_probability": "Uniform[0.1,1.0)",
+  "objective": "sum of masked target CE / (128 * probability)",
+  "limitations": [
+    "Single seed, short adaptation; no Dream/CART reproduction.",
+    "WikiText may be present in the base model's pretraining data.",
+    "Shift and same-position receive equal data order, masks, steps and token exposure.",
+    "Truncated noise interval: not an estimate of the full diffusion ELBO.",
+    "Original AR CE and denoising CE have different conditioning."
+  ],
+  "data_manifest_sha256": "605b872d8258e9e45f75760cd97c66e1d7dbd937db6bf782b0b33979ced42a2c",
+  "script_sha256": "b46246f45075759cdbf0ccdc6219f4c5d2bf4d2e1cedb635e2c7ef8469ee46e4",
+  "git_commit": "77af799b862cabc6cbf7c3fd6ec62e75d7f4a50d",
+  "attention_check": {
+    "causal": 0.0,
+    "bidirectional": 3.453125
+  },
+  "before": {
+    "0.25": {
+      "masked_ce_nats": 12.168809320585405,
+      "masked_accuracy": 0.010710808179162609,
+      "masked_tokens": 1027
+    },
+    "0.5": {
+      "masked_ce_nats": 15.196446216244494,
+      "masked_accuracy": 0.004826254826254826,
+      "masked_tokens": 2072
+    },
+    "0.75": {
+      "masked_ce_nats": 17.30887762883546,
+      "masked_accuracy": 0.00032948929159802305,
+      "masked_tokens": 3035
+    }
+  },
+  "ar_reference_before": {
+    "next_token_ce_nats": 3.2420038618147373,
+    "tokens": 4096,
+    "note": "Different conditioning from masked CE; not a head-to-head quality score."
+  },
+  "samples_before": [
+    {
+      "prompt": "The purpose of science is",
+      "completion": "iauxiauxichoicho+\"'+\"'怩怩怩呤呤呤呤ético Premiershipashireashireashireashireashire呤呤呤呤呤呤呤呤呤呤呤呤",
+      "remaining_masks": [
+        28,
+        24,
+        20,
+        16,
+        12,
+        8,
+        4,
+        0
+      ],
+      "steps": 8,
+      "generated_tokens": 32
+    },
+    {
+      "prompt": "Once upon a time, a small bird",
+      "completion": "itinitinitinitin怩怩itinitinitinitinitinitinitinitinitinitinitin呤呤呤呤呤呤呤呤呤呤呤呤呤呤呤",
+      "remaining_masks": [
+        28,
+        24,
+        20,
+        16,
+        12,
+        8,
+        4,
+        0
+      ],
+      "steps": 8,
+      "generated_tokens": 32
+    },
+    {
+      "prompt": "A language model learns to",
+      "completion": "}}],\n}}],\n}}],\n}}],\n}}],\n}}],\n\">--}}\n))]}}],\n}}],\n))]}}],\n}}],\n}}],\n}}],\n}}],\n}}],\n}}],\n}}],\n}}],\n}}],\n}}],\n}}],\n}}],\n}}],\n}}],\n}}],\n}}],\n}}],\n\">--}}\n}}],\n}}],\n",
+      "remaining_masks": [
+        28,
+        24,
+        20,
+        16,
+        12,
+        8,
+        4,
+        0
+      ],
+      "steps": 8,
+      "generated_tokens": 32
+    }
+  ],
+  "training_seconds": 62.27868970000054,
+  "peak_allocated_gib": 1.2861251831054688,
+  "adapter_max_change": 0.008769337087869644,
+  "after": {
+    "0.25": {
+      "masked_ce_nats": 4.529992568806293,
+      "masked_accuracy": 0.22784810126582278,
+      "masked_tokens": 1027
+    },
+    "0.5": {
+      "masked_ce_nats": 5.493348670281959,
+      "masked_accuracy": 0.14575289575289574,
+      "masked_tokens": 2072
+    },
+    "0.75": {
+      "masked_ce_nats": 6.273189075853326,
+      "masked_accuracy": 0.09126853377265239,
+      "masked_tokens": 3035
+    }
+  },
+  "validation_after": {
+    "0.25": {
+      "masked_ce_nats": 4.160627437159271,
+      "masked_accuracy": 0.24453280318091453,
+      "masked_tokens": 503
+    },
+    "0.5": {
+      "masked_ce_nats": 5.137494858984006,
+      "masked_accuracy": 0.16902738432483475,
+      "masked_tokens": 1059
+    },
+    "0.75": {
+      "masked_ce_nats": 6.072303523942925,
+      "masked_accuracy": 0.09557867360208062,
+      "masked_tokens": 1538
+    }
+  },
+  "samples_after": [
+    {
+      "prompt": "The purpose of science is",
+      "completion": " to to the , , , , , , , , , , , , , , , , , , , , , , , , , , , , ,",
+      "remaining_masks": [
+        28,
+        24,
+        20,
+        16,
+        12,
+        8,
+        4,
+        0
+      ],
+      "steps": 8,
+      "generated_tokens": 32
+    },
+    {
+      "prompt": "Once upon a time, a small bird",
+      "completion": " was caught , , , , , , , , , , , , , , , , , , , , , , , , , , , , , ,",
+      "remaining_masks": [
+        28,
+        24,
+        20,
+        16,
+        12,
+        8,
+        4,
+        0
+      ],
+      "steps": 8,
+      "generated_tokens": 32
+    },
+    {
+      "prompt": "A language model learns to",
+      "completion": " understand the the . . . . . . . . . The . . . . . . . . The language model is . . . . . . .",
+      "remaining_masks": [
+        28,
+        24,
+        20,
+        16,
+        12,
+        8,
+        4,
+        0
+      ],
+      "steps": 8,
+      "generated_tokens": 32
+    }
+  ],
+  "training_log": [
+    {
+      "step": 1,
+      "loss": 17.05445098876953,
+      "mask_probability": 0.9062685430049896,
+      "masked_tokens": 118,
+      "gradient_norm": 1129.4886474609375
+    },
+    {
+      "step": 2,
+      "loss": 12.161457061767578,
+      "mask_probability": 0.38183053731918337,
+      "masked_tokens": 46,
+      "gradient_norm": 231.18458557128906
+    },
+    {
+      "step": 3,
+      "loss": 12.668219566345215,
+      "mask_probability": 0.846760892868042,
+      "masked_tokens": 102,
+      "gradient_norm": 261.5460510253906
+    },
+    {
+      "step": 4,
+      "loss": 7.740035057067871,
+      "mask_probability": 0.4083595156669617,
+      "masked_tokens": 43,
+      "gradient_norm": 156.61631774902344
+    },
+    {
+      "step": 5,
+      "loss": 17.431995391845703,
+      "mask_probability": 0.993642145395279,
+      "masked_tokens": 127,
+      "gradient_norm": 406.9374694824219
+    },
+    {
+      "step": 6,
+      "loss": 12.498246192932129,
+      "mask_probability": 0.2260780394077301,
+      "masked_tokens": 34,
+      "gradient_norm": 128.1702423095703
+    },
+    {
+      "step": 7,
+      "loss": 10.125577926635742,
+      "mask_probability": 0.8145866692066193,
+      "masked_tokens": 106,
+      "gradient_norm": 80.16608428955078
+    },
+    {
+      "step": 8,
+      "loss": 7.868537902832031,
+      "mask_probability": 0.3039842486381531,
+      "masked_tokens": 39,
+      "gradient_norm": 84.62796783447266
+    },
+    {
+      "step": 9,
+      "loss": 5.1223907470703125,
+      "mask_probability": 0.34529627561569215,
+      "masked_tokens": 30,
+      "gradient_norm": 42.81800842285156
+    },
+    {
+      "step": 10,
+      "loss": 7.114305019378662,
+      "mask_probability": 0.6125317335128784,
+      "masked_tokens": 66,
+      "gradient_norm": 29.65521240234375
+    },
+    {
+      "step": 11,
+      "loss": 8.49587345123291,
+      "mask_probability": 0.6267532885074616,
+      "masked_tokens": 80,
+      "gradient_norm": 70.27820587158203
+    },
+    {
+      "step": 12,
+      "loss": 11.995067596435547,
+      "mask_probability": 0.9505783677101135,
+      "masked_tokens": 119,
+      "gradient_norm": 644.6790161132812
+    },
+    {
+      "step": 13,
+      "loss": 9.453152656555176,
+      "mask_probability": 0.8132733523845672,
+      "masked_tokens": 111,
+      "gradient_norm": 787.8167724609375
+    },
+    {
+      "step": 14,
+      "loss": 6.401062965393066,
+      "mask_probability": 0.16837632060050967,
+      "masked_tokens": 24,
+      "gradient_norm": 54.57893753051758
+    },
+    {
+      "step": 15,
+      "loss": 8.0924711227417,
+      "mask_probability": 0.4964264690876007,
+      "masked_tokens": 64,
+      "gradient_norm": 32.65647888183594
+    },
+    {
+      "step": 16,
+      "loss": 8.245894432067871,
+      "mask_probability": 0.3118232190608978,
+      "masked_tokens": 45,
+      "gradient_norm": 37.44941711425781
+    },
+    {
+      "step": 17,
+      "loss": 4.586315631866455,
+      "mask_probability": 0.3574894368648529,
+      "masked_tokens": 40,
+      "gradient_norm": 37.5413703918457
+    },
+    {
+      "step": 18,
+      "loss": 8.750529289245605,
+      "mask_probability": 0.42799645066261294,
+      "masked_tokens": 61,
+      "gradient_norm": 60.43220138549805
+    },
+    {
+      "step": 19,
+      "loss": 7.498366355895996,
+      "mask_probability": 0.49325813651084904,
+      "masked_tokens": 70,
+      "gradient_norm": 31.888057708740234
+    },
+    {
+      "step": 20,
+      "loss": 6.819633483886719,
+      "mask_probability": 0.4957368731498718,
+      "masked_tokens": 57,
+      "gradient_norm": 27.702600479125977
+    },
+    {
+      "step": 21,
+      "loss": 8.290498733520508,
+      "mask_probability": 0.94443981051445,
+      "masked_tokens": 124,
+      "gradient_norm": 202.1210479736328
+    },
+    {
+      "step": 22,
+      "loss": 6.561453342437744,
+      "mask_probability": 0.41690712571144106,
+      "masked_tokens": 48,
+      "gradient_norm": 37.22175598144531
+    },
+    {
+      "step": 23,
+      "loss": 13.491772651672363,
+      "mask_probability": 0.9875929594039917,
+      "masked_tokens": 128,
+      "gradient_norm": 434.905029296875
+    },
+    {
+      "step": 24,
+      "loss": 8.61426067352295,
+      "mask_probability": 0.9174101173877716,
+      "masked_tokens": 117,
+      "gradient_norm": 208.8885040283203
+    },
+    {
+      "step": 25,
+      "loss": 8.33162784576416,
+      "mask_probability": 0.5859727680683137,
+      "masked_tokens": 82,
+      "gradient_norm": 36.469852447509766
+    },
+    {
+      "step": 26,
+      "loss": 8.798776626586914,
+      "mask_probability": 0.5256317555904388,
+      "masked_tokens": 74,
+      "gradient_norm": 32.036460876464844
+    },
+    {
+      "step": 27,
+      "loss": 5.723688125610352,
+      "mask_probability": 0.9478679418563842,
+      "masked_tokens": 125,
+      "gradient_norm": 28.9704647064209
+    },
+    {
+      "step": 28,
+      "loss": 4.747676849365234,
+      "mask_probability": 0.12792898416519166,
+      "masked_tokens": 14,
+      "gradient_norm": 65.29676055908203
+    },
+    {
+      "step": 29,
+      "loss": 6.327081203460693,
+      "mask_probability": 0.36404234170913696,
+      "masked_tokens": 46,
+      "gradient_norm": 42.33103942871094
+    },
+    {
+      "step": 30,
+      "loss": 7.25290584564209,
+      "mask_probability": 0.9116206228733063,
+      "masked_tokens": 118,
+      "gradient_norm": 42.5283317565918
+    },
+    {
+      "step": 31,
+      "loss": 5.379960060119629,
+      "mask_probability": 0.11100344061851503,
+      "masked_tokens": 11,
+      "gradient_norm": 53.14747619628906
+    },
+    {
+      "step": 32,
+      "loss": 5.949536323547363,
+      "mask_probability": 0.78367378115654,
+      "masked_tokens": 101,
+      "gradient_norm": 30.606916427612305
+    },
+    {
+      "step": 33,
+      "loss": 8.137603759765625,
+      "mask_probability": 0.6341096758842468,
+      "masked_tokens": 89,
+      "gradient_norm": 42.03224182128906
+    },
+    {
+      "step": 34,
+      "loss": 5.748327255249023,
+      "mask_probability": 0.3819787025451661,
+      "masked_tokens": 41,
+      "gradient_norm": 30.39066505432129
+    },
+    {
+      "step": 35,
+      "loss": 5.128925800323486,
+      "mask_probability": 0.1200280010700226,
+      "masked_tokens": 15,
+      "gradient_norm": 48.084129333496094
+    },
+    {
+      "step": 36,
+      "loss": 6.608686447143555,
+      "mask_probability": 0.16155776977539063,
+      "masked_tokens": 24,
+      "gradient_norm": 60.97342300415039
+    },
+    {
+      "step": 37,
+      "loss": 5.573573112487793,
+      "mask_probability": 0.2551059782505035,
+      "masked_tokens": 30,
+      "gradient_norm": 21.799758911132812
+    },
+    {
+      "step": 38,
+      "loss": 7.734004974365234,
+      "mask_probability": 0.5618285953998566,
+      "masked_tokens": 78,
+      "gradient_norm": 24.746688842773438
+    },
+    {
+      "step": 39,
+      "loss": 8.697417259216309,
+      "mask_probability": 0.9953824698925018,
+      "masked_tokens": 128,
+      "gradient_norm": 123.66450500488281
+    },
+    {
+      "step": 40,
+      "loss": 6.692138671875,
+      "mask_probability": 0.5254118144512177,
+      "masked_tokens": 65,
+      "gradient_norm": 25.645727157592773
+    },
+    {
+      "step": 41,
+      "loss": 6.942534446716309,
+      "mask_probability": 0.7002846002578735,
+      "masked_tokens": 90,
+      "gradient_norm": 21.925771713256836
+    },
+    {
+      "step": 42,
+      "loss": 7.636984348297119,
+      "mask_probability": 0.7011761128902435,
+      "masked_tokens": 97,
+      "gradient_norm": 46.1442985534668
+    },
+    {
+      "step": 43,
+      "loss": 7.180382251739502,
+      "mask_probability": 0.7329134047031403,
+      "masked_tokens": 94,
+      "gradient_norm": 41.360321044921875
+    },
+    {
+      "step": 44,
+      "loss": 6.36299991607666,
+      "mask_probability": 0.5868366003036499,
+      "masked_tokens": 84,
+      "gradient_norm": 29.44272232055664
+    },
+    {
+      "step": 45,
+      "loss": 6.2315802574157715,
+      "mask_probability": 0.24593421816825867,
+      "masked_tokens": 32,
+      "gradient_norm": 29.394668579101562
+    },
+    {
+      "step": 46,
+      "loss": 6.207569599151611,
+      "mask_probability": 0.7843536674976349,
+      "masked_tokens": 93,
+      "gradient_norm": 32.19982147216797
+    },
+    {
+      "step": 47,
+      "loss": 7.298630237579346,
+      "mask_probability": 0.8724111795425415,
+      "masked_tokens": 108,
+      "gradient_norm": 25.268497467041016
+    },
+    {
+      "step": 48,
+      "loss": 6.380770206451416,
+      "mask_probability": 0.3863600373268128,
+      "masked_tokens": 49,
+      "gradient_norm": 26.551406860351562
+    },
+    {
+      "step": 49,
+      "loss": 7.107190132141113,
+      "mask_probability": 0.37300236821174626,
+      "masked_tokens": 56,
+      "gradient_norm": 30.415668487548828
+    },
+    {
+      "step": 50,
+      "loss": 5.7671403884887695,
+      "mask_probability": 0.2517277359962463,
+      "masked_tokens": 36,
+      "gradient_norm": 48.93754959106445
+    },
+    {
+      "step": 51,
+      "loss": 5.952669143676758,
+      "mask_probability": 0.3064480721950531,
+      "masked_tokens": 38,
+      "gradient_norm": 23.413307189941406
+    },
+    {
+      "step": 52,
+      "loss": 3.816561698913574,
+      "mask_probability": 0.17498823404312136,
+      "masked_tokens": 17,
+      "gradient_norm": 23.872610092163086
+    },
+    {
+      "step": 53,
+      "loss": 5.2462382316589355,
+      "mask_probability": 0.42402753233909607,
+      "masked_tokens": 51,
+      "gradient_norm": 32.36367416381836
+    },
+    {
+      "step": 54,
+      "loss": 4.446297645568848,
+      "mask_probability": 0.5717853844165802,
+      "masked_tokens": 57,
+      "gradient_norm": 26.718061447143555
+    },
+    {
+      "step": 55,
+      "loss": 7.78598690032959,
+      "mask_probability": 0.5468026995658875,
+      "masked_tokens": 78,
+      "gradient_norm": 42.14458084106445
+    },
+    {
+      "step": 56,
+      "loss": 5.463512420654297,
+      "mask_probability": 0.3188893377780915,
+      "masked_tokens": 47,
+      "gradient_norm": 29.88428497314453
+    },
+    {
+      "step": 57,
+      "loss": 4.967494487762451,
+      "mask_probability": 0.6478965520858765,
+      "masked_tokens": 66,
+      "gradient_norm": 29.329858779907227
+    },
+    {
+      "step": 58,
+      "loss": 6.2899580001831055,
+      "mask_probability": 0.10668615698814393,
+      "masked_tokens": 18,
+      "gradient_norm": 56.62851333618164
+    },
+    {
+      "step": 59,
+      "loss": 6.808833122253418,
+      "mask_probability": 0.219261634349823,
+      "masked_tokens": 36,
+      "gradient_norm": 45.59516525268555
+    },
+    {
+      "step": 60,
+      "loss": 6.640082359313965,
+      "mask_probability": 0.9276859283447265,
+      "masked_tokens": 115,
+      "gradient_norm": 35.539432525634766
+    },
+    {
+      "step": 61,
+      "loss": 6.097599983215332,
+      "mask_probability": 0.8636177718639374,
+      "masked_tokens": 109,
+      "gradient_norm": 42.18140411376953
+    },
+    {
+      "step": 62,
+      "loss": 5.826026439666748,
+      "mask_probability": 0.19232141971588135,
+      "masked_tokens": 27,
+      "gradient_norm": 35.67271041870117
+    },
+    {
+      "step": 63,
+      "loss": 6.849155902862549,
+      "mask_probability": 0.6417364835739136,
+      "masked_tokens": 85,
+      "gradient_norm": 32.94340515136719
+    },
+    {
+      "step": 64,
+      "loss": 6.576970100402832,
+      "mask_probability": 0.16523717045783998,
+      "masked_tokens": 27,
+      "gradient_norm": 51.1525764465332
+    },
+    {
+      "step": 65,
+      "loss": 5.34097146987915,
+      "mask_probability": 0.6992641270160675,
+      "masked_tokens": 87,
+      "gradient_norm": 32.775630950927734
+    },
+    {
+      "step": 66,
+      "loss": 7.706249713897705,
+      "mask_probability": 0.8461355090141296,
+      "masked_tokens": 108,
+      "gradient_norm": 25.112106323242188
+    },
+    {
+      "step": 67,
+      "loss": 5.972532272338867,
+      "mask_probability": 0.3468045353889465,
+      "masked_tokens": 48,
+      "gradient_norm": 30.573375701904297
+    },
+    {
+      "step": 68,
+      "loss": 6.15031623840332,
+      "mask_probability": 0.6596762776374817,
+      "masked_tokens": 78,
+      "gradient_norm": 36.226524353027344
+    },
+    {
+      "step": 69,
+      "loss": 5.5366034507751465,
+      "mask_probability": 0.36205713152885444,
+      "masked_tokens": 41,
+      "gradient_norm": 26.771671295166016
+    },
+    {
+      "step": 70,
+      "loss": 3.875562906265259,
+      "mask_probability": 0.28185248374938965,
+      "masked_tokens": 26,
+      "gradient_norm": 26.013843536376953
+    },
+    {
+      "step": 71,
+      "loss": 6.728569984436035,
+      "mask_probability": 0.5925902605056763,
+      "masked_tokens": 73,
+      "gradient_norm": 21.126264572143555
+    },
+    {
+      "step": 72,
+      "loss": 4.468963623046875,
+      "mask_probability": 0.3762614130973816,
+      "masked_tokens": 39,
+      "gradient_norm": 23.118831634521484
+    },
+    {
+      "step": 73,
+      "loss": 3.6803460121154785,
+      "mask_probability": 0.3856533825397491,
+      "masked_tokens": 45,
+      "gradient_norm": 23.109724044799805
+    },
+    {
+      "step": 74,
+      "loss": 7.871129035949707,
+      "mask_probability": 0.7888725996017456,
+      "masked_tokens": 110,
+      "gradient_norm": 30.859167098999023
+    },
+    {
+      "step": 75,
+      "loss": 7.153388500213623,
+      "mask_probability": 0.912429416179657,
+      "masked_tokens": 119,
+      "gradient_norm": 27.386728286743164
+    },
+    {
+      "step": 76,
+      "loss": 8.080900192260742,
+      "mask_probability": 0.7587560594081879,
+      "masked_tokens": 95,
+      "gradient_norm": 40.301368713378906
+    },
+    {
+      "step": 77,
+      "loss": 7.867562770843506,
+      "mask_probability": 0.9926354050636291,
+      "masked_tokens": 126,
+      "gradient_norm": 42.4898567199707
+    },
+    {
+      "step": 78,
+      "loss": 7.587101936340332,
+      "mask_probability": 0.9317142307758332,
+      "masked_tokens": 122,
+      "gradient_norm": 43.985931396484375
+    },
+    {
+      "step": 79,
+      "loss": 6.2166266441345215,
+      "mask_probability": 0.3401718080043793,
+      "masked_tokens": 46,
+      "gradient_norm": 30.392744064331055
+    },
+    {
+      "step": 80,
+      "loss": 7.190528392791748,
+      "mask_probability": 0.9104011833667756,
+      "masked_tokens": 116,
+      "gradient_norm": 42.44512176513672
+    },
+    {
+      "step": 81,
+      "loss": 7.732774257659912,
+      "mask_probability": 0.9490948379039764,
+      "masked_tokens": 123,
+      "gradient_norm": 42.66263961791992
+    },
+    {
+      "step": 82,
+      "loss": 5.395984649658203,
+      "mask_probability": 0.47118092775344855,
+      "masked_tokens": 61,
+      "gradient_norm": 35.72150802612305
+    },
+    {
+      "step": 83,
+      "loss": 5.172698974609375,
+      "mask_probability": 0.1722982466220856,
+      "masked_tokens": 18,
+      "gradient_norm": 30.94437026977539
+    },
+    {
+      "step": 84,
+      "loss": 5.193019390106201,
+      "mask_probability": 0.27686116099357605,
+      "masked_tokens": 37,
+      "gradient_norm": 25.371585845947266
+    },
+    {
+      "step": 85,
+      "loss": 5.751631736755371,
+      "mask_probability": 0.2737537145614624,
+      "masked_tokens": 31,
+      "gradient_norm": 25.803434371948242
+    },
+    {
+      "step": 86,
+      "loss": 6.210134983062744,
+      "mask_probability": 0.7844749569892884,
+      "masked_tokens": 99,
+      "gradient_norm": 40.950931549072266
+    },
+    {
+      "step": 87,
+      "loss": 7.914895057678223,
+      "mask_probability": 0.6086129724979401,
+      "masked_tokens": 82,
+      "gradient_norm": 29.353181838989258
+    },
+    {
+      "step": 88,
+      "loss": 6.241596221923828,
+      "mask_probability": 0.7398710548877716,
+      "masked_tokens": 96,
+      "gradient_norm": 32.92752456665039
+    },
+    {
+      "step": 89,
+      "loss": 5.003082752227783,
+      "mask_probability": 0.4747053503990174,
+      "masked_tokens": 55,
+      "gradient_norm": 21.554975509643555
+    },
+    {
+      "step": 90,
+      "loss": 6.180271148681641,
+      "mask_probability": 0.9121284723281861,
+      "masked_tokens": 114,
+      "gradient_norm": 24.179771423339844
+    },
+    {
+      "step": 91,
+      "loss": 7.866072177886963,
+      "mask_probability": 0.9963265001773834,
+      "masked_tokens": 128,
+      "gradient_norm": 46.808170318603516
+    },
+    {
+      "step": 92,
+      "loss": 7.105262279510498,
+      "mask_probability": 0.5813214421272278,
+      "masked_tokens": 75,
+      "gradient_norm": 19.56222152709961
+    },
+    {
+      "step": 93,
+      "loss": 3.555370330810547,
+      "mask_probability": 0.4585218667984009,
+      "masked_tokens": 55,
+      "gradient_norm": 32.61714553833008
+    },
+    {
+      "step": 94,
+      "loss": 6.018457889556885,
+      "mask_probability": 0.34083683490753175,
+      "masked_tokens": 47,
+      "gradient_norm": 34.944759368896484
+    },
+    {
+      "step": 95,
+      "loss": 6.089937210083008,
+      "mask_probability": 0.38398381471633913,
+      "masked_tokens": 50,
+      "gradient_norm": 31.486051559448242
+    },
+    {
+      "step": 96,
+      "loss": 6.721602439880371,
+      "mask_probability": 0.5873182713985443,
+      "masked_tokens": 76,
+      "gradient_norm": 49.50944519042969
+    },
+    {
+      "step": 97,
+      "loss": 6.476580619812012,
+      "mask_probability": 0.5932981491088868,
+      "masked_tokens": 76,
+      "gradient_norm": 20.84487533569336
+    },
+    {
+      "step": 98,
+      "loss": 6.69659948348999,
+      "mask_probability": 0.6254171192646026,
+      "masked_tokens": 74,
+      "gradient_norm": 24.5468807220459
+    },
+    {
+      "step": 99,
+      "loss": 6.676262378692627,
+      "mask_probability": 0.5900137841701508,
+      "masked_tokens": 77,
+      "gradient_norm": 34.83076095581055
+    },
+    {
+      "step": 100,
+      "loss": 8.108654022216797,
+      "mask_probability": 0.7753097414970398,
+      "masked_tokens": 104,
+      "gradient_norm": 45.72810363769531
+    },
+    {
+      "step": 101,
+      "loss": 5.607107162475586,
+      "mask_probability": 0.3414577662944794,
+      "masked_tokens": 44,
+      "gradient_norm": 19.857391357421875
+    },
+    {
+      "step": 102,
+      "loss": 7.954415798187256,
+      "mask_probability": 0.9124377846717835,
+      "masked_tokens": 120,
+      "gradient_norm": 25.558259963989258
+    },
+    {
+      "step": 103,
+      "loss": 5.920047760009766,
+      "mask_probability": 0.5440147578716278,
+      "masked_tokens": 69,
+      "gradient_norm": 21.107181549072266
+    },
+    {
+      "step": 104,
+      "loss": 5.494024276733398,
+      "mask_probability": 0.7132476091384887,
+      "masked_tokens": 88,
+      "gradient_norm": 23.476097106933594
+    },
+    {
+      "step": 105,
+      "loss": 5.567598819732666,
+      "mask_probability": 0.3198042929172516,
+      "masked_tokens": 39,
+      "gradient_norm": 26.25041961669922
+    },
+    {
+      "step": 106,
+      "loss": 5.2263569831848145,
+      "mask_probability": 0.5545327723026275,
+      "masked_tokens": 62,
+      "gradient_norm": 17.039783477783203
+    },
+    {
+      "step": 107,
+      "loss": 4.545124530792236,
+      "mask_probability": 0.3439937949180603,
+      "masked_tokens": 42,
+      "gradient_norm": 32.58686447143555
+    },
+    {
+      "step": 108,
+      "loss": 7.544705867767334,
+      "mask_probability": 0.7539523303508758,
+      "masked_tokens": 101,
+      "gradient_norm": 27.139558792114258
+    },
+    {
+      "step": 109,
+      "loss": 8.31164836883545,
+      "mask_probability": 0.9438349187374115,
+      "masked_tokens": 125,
+      "gradient_norm": 28.62148094177246
+    },
+    {
+      "step": 110,
+      "loss": 6.784374713897705,
+      "mask_probability": 0.680644017457962,
+      "masked_tokens": 84,
+      "gradient_norm": 18.191299438476562
+    },
+    {
+      "step": 111,
+      "loss": 5.031086444854736,
+      "mask_probability": 0.5055135250091553,
+      "masked_tokens": 73,
+      "gradient_norm": 38.92926025390625
+    },
+    {
+      "step": 112,
+      "loss": 5.610305309295654,
+      "mask_probability": 0.4752326726913453,
+      "masked_tokens": 57,
+      "gradient_norm": 19.638731002807617
+    },
+    {
+      "step": 113,
+      "loss": 5.995038986206055,
+      "mask_probability": 0.6474984586238861,
+      "masked_tokens": 80,
+      "gradient_norm": 20.639053344726562
+    },
+    {
+      "step": 114,
+      "loss": 6.853221416473389,
+      "mask_probability": 0.8935208082199096,
+      "masked_tokens": 111,
+      "gradient_norm": 25.820878982543945
+    },
+    {
+      "step": 115,
+      "loss": 7.000211238861084,
+      "mask_probability": 0.49530611038208006,
+      "masked_tokens": 66,
+      "gradient_norm": 22.94260597229004
+    },
+    {
+      "step": 116,
+      "loss": 4.699831485748291,
+      "mask_probability": 0.289467865228653,
+      "masked_tokens": 33,
+      "gradient_norm": 22.78267478942871
+    },
+    {
+      "step": 117,
+      "loss": 8.065462112426758,
+      "mask_probability": 0.8482932388782501,
+      "masked_tokens": 109,
+      "gradient_norm": 33.52294158935547
+    },
+    {
+      "step": 118,
+      "loss": 5.6861724853515625,
+      "mask_probability": 0.662794828414917,
+      "masked_tokens": 79,
+      "gradient_norm": 18.2401180267334
+    },
+    {
+      "step": 119,
+      "loss": 5.303371906280518,
+      "mask_probability": 0.20419432520866393,
+      "masked_tokens": 31,
+      "gradient_norm": 30.765968322753906
+    },
+    {
+      "step": 120,
+      "loss": 4.764559268951416,
+      "mask_probability": 0.6019553542137146,
+      "masked_tokens": 65,
+      "gradient_norm": 20.73894691467285
+    },
+    {
+      "step": 121,
+      "loss": 7.60312557220459,
+      "mask_probability": 0.5157673954963684,
+      "masked_tokens": 73,
+      "gradient_norm": 25.732999801635742
+    },
+    {
+      "step": 122,
+      "loss": 5.771064758300781,
+      "mask_probability": 0.6434378623962402,
+      "masked_tokens": 78,
+      "gradient_norm": 28.881898880004883
+    },
+    {
+      "step": 123,
+      "loss": 6.059032440185547,
+      "mask_probability": 0.5921325147151947,
+      "masked_tokens": 81,
+      "gradient_norm": 31.021879196166992
+    },
+    {
+      "step": 124,
+      "loss": 3.7599258422851562,
+      "mask_probability": 0.26341047286987307,
+      "masked_tokens": 28,
+      "gradient_norm": 28.64563751220703
+    },
+    {
+      "step": 125,
+      "loss": 7.053085803985596,
+      "mask_probability": 0.7772121250629425,
+      "masked_tokens": 103,
+      "gradient_norm": 20.8466739654541
+    },
+    {
+      "step": 126,
+      "loss": 7.85340690612793,
+      "mask_probability": 0.9781407475471496,
+      "masked_tokens": 125,
+      "gradient_norm": 49.673343658447266
+    },
+    {
+      "step": 127,
+      "loss": 5.340851783752441,
+      "mask_probability": 0.2504802405834198,
+      "masked_tokens": 32,
+      "gradient_norm": 19.388517379760742
+    },
+    {
+      "step": 128,
+      "loss": 4.344213962554932,
+      "mask_probability": 0.4019982278347015,
+      "masked_tokens": 42,
+      "gradient_norm": 19.015052795410156
+    },
+    {
+      "step": 129,
+      "loss": 6.523300647735596,
+      "mask_probability": 0.8571583151817321,
+      "masked_tokens": 105,
+      "gradient_norm": 20.756603240966797
+    },
+    {
+      "step": 130,
+      "loss": 6.72953987121582,
+      "mask_probability": 0.8096630454063416,
+      "masked_tokens": 105,
+      "gradient_norm": 40.776180267333984
+    },
+    {
+      "step": 131,
+      "loss": 5.686136245727539,
+      "mask_probability": 0.6678785800933837,
+      "masked_tokens": 75,
+      "gradient_norm": 18.780012130737305
+    },
+    {
+      "step": 132,
+      "loss": 6.377676963806152,
+      "mask_probability": 0.9183653593063354,
+      "masked_tokens": 114,
+      "gradient_norm": 26.300983428955078
+    },
+    {
+      "step": 133,
+      "loss": 5.61594820022583,
+      "mask_probability": 0.5299512922763825,
+      "masked_tokens": 70,
+      "gradient_norm": 16.057279586791992
+    },
+    {
+      "step": 134,
+      "loss": 5.910856246948242,
+      "mask_probability": 0.660493278503418,
+      "masked_tokens": 83,
+      "gradient_norm": 26.88384437561035
+    },
+    {
+      "step": 135,
+      "loss": 5.393028259277344,
+      "mask_probability": 0.331427001953125,
+      "masked_tokens": 46,
+      "gradient_norm": 26.36195945739746
+    },
+    {
+      "step": 136,
+      "loss": 2.781986951828003,
+      "mask_probability": 0.19707638621330262,
+      "masked_tokens": 21,
+      "gradient_norm": 38.96392059326172
+    },
+    {
+      "step": 137,
+      "loss": 5.19575309753418,
+      "mask_probability": 0.3235076189041138,
+      "masked_tokens": 44,
+      "gradient_norm": 26.679502487182617
+    },
+    {
+      "step": 138,
+      "loss": 5.820309638977051,
+      "mask_probability": 0.16953047513961794,
+      "masked_tokens": 29,
+      "gradient_norm": 30.766843795776367
+    },
+    {
+      "step": 139,
+      "loss": 6.354111194610596,
+      "mask_probability": 0.686314582824707,
+      "masked_tokens": 93,
+      "gradient_norm": 23.265357971191406
+    },
+    {
+      "step": 140,
+      "loss": 7.009589195251465,
+      "mask_probability": 0.9475138902664184,
+      "masked_tokens": 118,
+      "gradient_norm": 24.392669677734375
+    },
+    {
+      "step": 141,
+      "loss": 6.026921272277832,
+      "mask_probability": 0.7946115076541901,
+      "masked_tokens": 102,
+      "gradient_norm": 25.743881225585938
+    },
+    {
+      "step": 142,
+      "loss": 6.021648406982422,
+      "mask_probability": 0.5403918981552124,
+      "masked_tokens": 70,
+      "gradient_norm": 20.774032592773438
+    },
+    {
+      "step": 143,
+      "loss": 6.791387557983398,
+      "mask_probability": 0.5284386873245239,
+      "masked_tokens": 73,
+      "gradient_norm": 25.67012596130371
+    },
+    {
+      "step": 144,
+      "loss": 6.0877203941345215,
+      "mask_probability": 0.38039019107818606,
+      "masked_tokens": 57,
+      "gradient_norm": 20.752605438232422
+    },
+    {
+      "step": 145,
+      "loss": 5.493800640106201,
+      "mask_probability": 0.7263964414596558,
+      "masked_tokens": 94,
+      "gradient_norm": 25.737075805664062
+    },
+    {
+      "step": 146,
+      "loss": 4.918241024017334,
+      "mask_probability": 0.27859429717063905,
+      "masked_tokens": 36,
+      "gradient_norm": 33.4609489440918
+    },
+    {
+      "step": 147,
+      "loss": 5.761679172515869,
+      "mask_probability": 0.4853035092353821,
+      "masked_tokens": 67,
+      "gradient_norm": 46.30263137817383
+    },
+    {
+      "step": 148,
+      "loss": 7.818002700805664,
+      "mask_probability": 0.6731956303119659,
+      "masked_tokens": 92,
+      "gradient_norm": 26.8504581451416
+    },
+    {
+      "step": 149,
+      "loss": 5.235976219177246,
+      "mask_probability": 0.16718466877937316,
+      "masked_tokens": 24,
+      "gradient_norm": 30.900896072387695
+    },
+    {
+      "step": 150,
+      "loss": 7.1567463874816895,
+      "mask_probability": 0.9147250115871429,
+      "masked_tokens": 118,
+      "gradient_norm": 27.79056739807129
+    },
+    {
+      "step": 151,
+      "loss": 7.719088077545166,
+      "mask_probability": 0.7531351149082184,
+      "masked_tokens": 103,
+      "gradient_norm": 33.433990478515625
+    },
+    {
+      "step": 152,
+      "loss": 6.247790813446045,
+      "mask_probability": 0.8816207051277161,
+      "masked_tokens": 111,
+      "gradient_norm": 44.30364990234375
+    },
+    {
+      "step": 153,
+      "loss": 7.125343322753906,
+      "mask_probability": 0.8937779784202575,
+      "masked_tokens": 115,
+      "gradient_norm": 34.7553596496582
+    },
+    {
+      "step": 154,
+      "loss": 6.337568283081055,
+      "mask_probability": 0.712951922416687,
+      "masked_tokens": 98,
+      "gradient_norm": 29.909835815429688
+    },
+    {
+      "step": 155,
+      "loss": 5.034005165100098,
+      "mask_probability": 0.3852334558963776,
+      "masked_tokens": 50,
+      "gradient_norm": 28.452804565429688
+    },
+    {
+      "step": 156,
+      "loss": 5.770614147186279,
+      "mask_probability": 0.240440571308136,
+      "masked_tokens": 33,
+      "gradient_norm": 29.939504623413086
+    },
+    {
+      "step": 157,
+      "loss": 6.148789882659912,
+      "mask_probability": 0.3809744834899903,
+      "masked_tokens": 52,
+      "gradient_norm": 24.23333168029785
+    },
+    {
+      "step": 158,
+      "loss": 4.024347305297852,
+      "mask_probability": 0.1415433406829834,
+      "masked_tokens": 17,
+      "gradient_norm": 37.0483283996582
+    },
+    {
+      "step": 159,
+      "loss": 5.187224388122559,
+      "mask_probability": 0.29808494448661804,
+      "masked_tokens": 40,
+      "gradient_norm": 26.486520767211914
+    },
+    {
+      "step": 160,
+      "loss": 7.2399396896362305,
+      "mask_probability": 0.8723265290260315,
+      "masked_tokens": 112,
+      "gradient_norm": 22.375804901123047
+    },
+    {
+      "step": 161,
+      "loss": 7.821231842041016,
+      "mask_probability": 0.8867130935192108,
+      "masked_tokens": 114,
+      "gradient_norm": 27.90237045288086
+    },
+    {
+      "step": 162,
+      "loss": 4.704585552215576,
+      "mask_probability": 0.28775613307952885,
+      "masked_tokens": 32,
+      "gradient_norm": 26.27827262878418
+    },
+    {
+      "step": 163,
+      "loss": 6.052951812744141,
+      "mask_probability": 0.4006423175334931,
+      "masked_tokens": 62,
+      "gradient_norm": 28.048763275146484
+    },
+    {
+      "step": 164,
+      "loss": 4.86910343170166,
+      "mask_probability": 0.24632528424263,
+      "masked_tokens": 34,
+      "gradient_norm": 24.851715087890625
+    },
+    {
+      "step": 165,
+      "loss": 5.863341331481934,
+      "mask_probability": 0.6657857596874237,
+      "masked_tokens": 75,
+      "gradient_norm": 18.889846801757812
+    },
+    {
+      "step": 166,
+      "loss": 7.562177658081055,
+      "mask_probability": 0.8993891060352326,
+      "masked_tokens": 108,
+      "gradient_norm": 25.969823837280273
+    },
+    {
+      "step": 167,
+      "loss": 7.5267767906188965,
+      "mask_probability": 0.5765615403652191,
+      "masked_tokens": 80,
+      "gradient_norm": 25.023317337036133
+    },
+    {
+      "step": 168,
+      "loss": 4.756699085235596,
+      "mask_probability": 0.7530758917331696,
+      "masked_tokens": 92,
+      "gradient_norm": 15.830750465393066
+    },
+    {
+      "step": 169,
+      "loss": 4.242096900939941,
+      "mask_probability": 0.3713680982589722,
+      "masked_tokens": 47,
+      "gradient_norm": 20.601747512817383
+    },
+    {
+      "step": 170,
+      "loss": 6.691104888916016,
+      "mask_probability": 0.879057639837265,
+      "masked_tokens": 112,
+      "gradient_norm": 22.666719436645508
+    },
+    {
+      "step": 171,
+      "loss": 6.1921892166137695,
+      "mask_probability": 0.6672480463981628,
+      "masked_tokens": 87,
+      "gradient_norm": 22.335708618164062
+    },
+    {
+      "step": 172,
+      "loss": 6.342597484588623,
+      "mask_probability": 0.6910954058170319,
+      "masked_tokens": 84,
+      "gradient_norm": 17.779102325439453
+    },
+    {
+      "step": 173,
+      "loss": 3.096177101135254,
+      "mask_probability": 0.1762048304080963,
+      "masked_tokens": 18,
+      "gradient_norm": 25.484962463378906
+    },
+    {
+      "step": 174,
+      "loss": 6.712805271148682,
+      "mask_probability": 0.7063841581344604,
+      "masked_tokens": 95,
+      "gradient_norm": 23.299713134765625
+    },
+    {
+      "step": 175,
+      "loss": 4.885290622711182,
+      "mask_probability": 0.18425741195678713,
+      "masked_tokens": 32,
+      "gradient_norm": 33.52909851074219
+    },
+    {
+      "step": 176,
+      "loss": 6.551778316497803,
+      "mask_probability": 0.8353349506855011,
+      "masked_tokens": 105,
+      "gradient_norm": 15.532506942749023
+    },
+    {
+      "step": 177,
+      "loss": 7.923086643218994,
+      "mask_probability": 0.9905591070652008,
+      "masked_tokens": 128,
+      "gradient_norm": 34.68096923828125
+    },
+    {
+      "step": 178,
+      "loss": 6.799339771270752,
+      "mask_probability": 0.7185971677303314,
+      "masked_tokens": 91,
+      "gradient_norm": 23.98599624633789
+    },
+    {
+      "step": 179,
+      "loss": 3.8807566165924072,
+      "mask_probability": 0.30301125049591066,
+      "masked_tokens": 32,
+      "gradient_norm": 26.477596282958984
+    },
+    {
+      "step": 180,
+      "loss": 4.074460029602051,
+      "mask_probability": 0.3768969357013703,
+      "masked_tokens": 44,
+      "gradient_norm": 20.32591438293457
+    },
+    {
+      "step": 181,
+      "loss": 5.015996932983398,
+      "mask_probability": 0.39217790961265564,
+      "masked_tokens": 43,
+      "gradient_norm": 15.706250190734863
+    },
+    {
+      "step": 182,
+      "loss": 6.851187229156494,
+      "mask_probability": 0.8573081970214844,
+      "masked_tokens": 113,
+      "gradient_norm": 21.800100326538086
+    },
+    {
+      "step": 183,
+      "loss": 4.783283710479736,
+      "mask_probability": 0.4749189615249634,
+      "masked_tokens": 61,
+      "gradient_norm": 26.00358009338379
+    },
+    {
+      "step": 184,
+      "loss": 5.617626190185547,
+      "mask_probability": 0.5474294781684875,
+      "masked_tokens": 76,
+      "gradient_norm": 32.77700424194336
+    },
+    {
+      "step": 185,
+      "loss": 6.704920291900635,
+      "mask_probability": 0.8341863214969635,
+      "masked_tokens": 114,
+      "gradient_norm": 30.168275833129883
+    },
+    {
+      "step": 186,
+      "loss": 4.970588684082031,
+      "mask_probability": 0.36473070383071904,
+      "masked_tokens": 43,
+      "gradient_norm": 24.031661987304688
+    },
+    {
+      "step": 187,
+      "loss": 4.806443691253662,
+      "mask_probability": 0.32554684877395634,
+      "masked_tokens": 39,
+      "gradient_norm": 25.322927474975586
+    },
+    {
+      "step": 188,
+      "loss": 7.244943141937256,
+      "mask_probability": 0.9926797688007355,
+      "masked_tokens": 126,
+      "gradient_norm": 39.9718132019043
+    },
+    {
+      "step": 189,
+      "loss": 7.056644916534424,
+      "mask_probability": 0.6601532816886901,
+      "masked_tokens": 85,
+      "gradient_norm": 23.060047149658203
+    },
+    {
+      "step": 190,
+      "loss": 3.0390493869781494,
+      "mask_probability": 0.40342746973037724,
+      "masked_tokens": 44,
+      "gradient_norm": 17.63214874267578
+    },
+    {
+      "step": 191,
+      "loss": 7.506322860717773,
+      "mask_probability": 0.8189429521560669,
+      "masked_tokens": 111,
+      "gradient_norm": 23.531333923339844
+    },
+    {
+      "step": 192,
+      "loss": 5.922389984130859,
+      "mask_probability": 0.8142929136753082,
+      "masked_tokens": 95,
+      "gradient_norm": 20.877534866333008
+    },
+    {
+      "step": 193,
+      "loss": 6.393729209899902,
+      "mask_probability": 0.8340412139892578,
+      "masked_tokens": 98,
+      "gradient_norm": 30.12685203552246
+    },
+    {
+      "step": 194,
+      "loss": 4.842344760894775,
+      "mask_probability": 0.5801401972770691,
+      "masked_tokens": 73,
+      "gradient_norm": 26.1205997467041
+    },
+    {
+      "step": 195,
+      "loss": 4.436096668243408,
+      "mask_probability": 0.217958402633667,
+      "masked_tokens": 28,
+      "gradient_norm": 29.30196189880371
+    },
+    {
+      "step": 196,
+      "loss": 7.195667743682861,
+      "mask_probability": 0.78367919921875,
+      "masked_tokens": 103,
+      "gradient_norm": 23.726606369018555
+    },
+    {
+      "step": 197,
+      "loss": 6.174709320068359,
+      "mask_probability": 0.5258431136608124,
+      "masked_tokens": 71,
+      "gradient_norm": 15.25349235534668
+    },
+    {
+      "step": 198,
+      "loss": 5.623574733734131,
+      "mask_probability": 0.29478459358215336,
+      "masked_tokens": 36,
+      "gradient_norm": 19.655508041381836
+    },
+    {
+      "step": 199,
+      "loss": 4.547641754150391,
+      "mask_probability": 0.4036214470863343,
+      "masked_tokens": 47,
+      "gradient_norm": 16.039262771606445
+    },
+    {
+      "step": 200,
+      "loss": 6.506947994232178,
+      "mask_probability": 0.6646262407302856,
+      "masked_tokens": 80,
+      "gradient_norm": 23.64818572998047
+    }
+  ],
+  "checkpoint_sha256": "1af61d237a78c0e42d47e9081022ee99ef24ed8131b98f18fa3c10f87e107c77"
+}

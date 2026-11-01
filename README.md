@@ -2,7 +2,9 @@
 
 A small, reproducible exploration of adapting an autoregressive language model to masked denoising, with explicit experimental limits.
 
-**Current status (2026-11-01):** historical synthetic masking and GPU measurements are archived; a real-weight Qwen2.5-0.5B comparison is being prepared. No completed 7B adaptation or Dream reproduction is claimed.
+**Current status (2026-11-01):** a real-weight Qwen2.5-0.5B comparison is complete: shifted and same-position denoising, 200 updates each. Held-out denoising loss decreased, while greedy iterative generation remained highly repetitive. No completed 7B adaptation or Dream reproduction is claimed.
+
+At 50% masking, held-out CE changed from **17.36 to 5.23** nats for shifted prediction and **15.20 to 5.49** for same-position prediction. These single-seed results cover 32 sequences and do not establish general language quality. [Full results and all fixed-prompt samples](docs/pilot-results.md).
 
 ## Experiments
 
@@ -10,7 +12,7 @@ A small, reproducible exploration of adapting an autoregressive language model t
 | --- | --- | --- |
 | 100-token absorbing-mask check and one synthetic GPU update | `results/hardware-2026-10-29/colab-check-results.json` | Empirical masking marginals and a working backward/update path |
 | A100/G4, Qwen2.5-7B-shaped random weights, frozen BF16 base + FP32 LoRA | `results/hardware-2026-10-29/` | Short-run throughput and memory under the tested configuration |
-| Qwen2.5-0.5B pretrained weights: shifted vs same-position denoising | [Preregistered protocol](docs/experiment-design.md) | Pending execution; no quality result yet |
+| Qwen2.5-0.5B pretrained weights: shifted vs same-position denoising | [Protocol](docs/experiment-design.md), [results](docs/pilot-results.md) | Short adaptation reduces masked CE; repetitive generation remains a failure |
 
 The hardware measurements used random weights and synthetic tokens. They must not be described as pretrained model training or a Dream reproduction. Colab billing rates were observations on 2026-10-29, not current quotations.
 
@@ -23,11 +25,14 @@ python -m pip install -r requirements.txt
 python -m pytest tests -q
 python experiments/prepare_data.py
 python experiments/small_qwen.py --alignment both --steps 200 --test-examples 32
+python experiments/report_results.py
 ```
 
 On the original Windows host, `python -s` excludes conflicting user-site packages. A clean environment is recommended elsewhere. Downloads are approximately 1 GB. The preparation script pins both model and dataset revisions and records selected examples and hashes. Weights, corpus text, local adapter checkpoints and private application documents are excluded from Git.
 
 The training script performs behavioral attention checks, evaluates fixed held-out masks, records every training update, saves adapter checkpoints locally and exports metrics plus all fixed-prompt samples into `results/`. Failed runs must not be reported as completed results.
+
+Verified locally: four correctness tests passed, including target alignment, hidden-target non-leakage, future-token attention behavior and trainable parameter scope. Selected train/validation/test sequences have no exact token-sequence overlap. The report builder verifies matched seeds, masks, supervised token counts, training budgets and provenance across both completed runs. Peak allocated GPU memory was approximately 1.29 GiB on an RTX 3050 Laptop GPU; no Colab compute was used for this small-model pilot.
 
 ## Historical hardware run
 

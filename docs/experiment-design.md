@@ -12,7 +12,7 @@ The shift variant uses hidden state `i-1` to predict corrupted token `i`; the sa
 
 - Model: Qwen/Qwen2.5-0.5B, revision `060db6499f32faf8b98477b0a26969ef7d8b9987`.
 - Data: Salesforce/wikitext, revision `b08601e04326c79dfdd32d625aee71d232d685c3`, wikitext-2-raw-v1.
-- First 1,024 eligible training paragraphs, first 64 validation and 64 test paragraphs. Each has at least 128 tokens; use the first 128. Remove exact full-paragraph duplicates across these selected splits. Record source row IDs and token-file hashes.
+- First 1,024 eligible training paragraphs, first 64 validation and 64 test paragraphs. Each has at least 128 tokens; use the first 128. Remove exact full-paragraph duplicates and identical 128-token prefixes across these selected splits. Record source row IDs and token-file hashes.
 - Two fresh copies of the same frozen model; FP32 LoRA rank 8, alpha 16 on all seven attention/MLP linear projections, plus one trainable mask vector.
 - Seed 20261101; batch size 1; 200 updates per condition; 25,600 training token exposures per condition. Identical random paragraph order and Bernoulli masks.
 - AdamW, learning rate 1e-4, weight decay 0.01, gradient clipping 1.0. No early stopping or tuning against test results.
