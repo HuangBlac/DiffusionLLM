@@ -25,6 +25,8 @@
 
 上述拆分是总方案的工作安排，进入正式运行前仍应按实测成本核验。主设计见[真实文本适配](real-text-study.md)。三个学习节点保留：训练前理解目标与实现、短测后诊断、完整运行后解释结果。
 
+续写连贯性采用[DeepSeek Flash裁判方案](coherence-judge-plan.md)作为待校准方案：原16 CU评测中预留4 CU用于续文生成/指标，其余12 CU保留；裁判API从本地调用不占Colab GPU。另列人民币30元API预算上限，不能将其伪装成CU内已支付费用。模型、规程和预算已研究，尚无付费调用或正式裁判结果。
+
 ## B 必须保留的成熟模型质量与速度评测
 
 按已确认的[Dream/Qwen HellaSwag方案](dream-qwen-hellaswag-plan.md)执行：Dream-v0-Base-7B与Qwen2.5-7B Base，固定1,000题标准候选评分、另500题生成式改编，40 CU总上限，其中前3 CU用于校准。
