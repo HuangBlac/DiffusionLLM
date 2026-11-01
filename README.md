@@ -4,6 +4,8 @@ A small, reproducible exploration of adapting an autoregressive language model t
 
 **Project deliverables:** a coherent diffusion LLM note and a complete, reproducible real-text adaptation study. The current question is whether adapting pretrained AR weights produces a usable masked-denoising generator, followed by specific quality/cost or infilling comparisons. The existing 200-step comparison remains preliminary; the project does not claim a full-scale Dream reproduction. See [deliverables](docs/deliverables.md), the [real-text study design](docs/real-text-study.md), and the [opening learning draft](docs/diffusion-llm-note.md). The new study has not started training.
 
+**Next planned evaluation (2026-11-02):** compare pretrained Dream-v0-Base-7B and Qwen2.5-7B on a fixed HellaSwag subset, with standard candidate scoring and a separately labeled full-ending generation variant. [Protocol and Colab budget](docs/dream-qwen-hellaswag-plan.md). This evaluation has not run; its results will not be presented as our own 7B training outcomes.
+
 **Current status (2026-11-01):** a real-weight Qwen2.5-0.5B comparison is complete: shifted and same-position denoising, 200 updates each. Held-out denoising loss decreased, while greedy iterative generation remained highly repetitive. No completed 7B adaptation or Dream reproduction is claimed.
 
 At 50% masking, held-out CE changed from **17.36 to 5.23** nats for shifted prediction and **15.20 to 5.49** for same-position prediction. These single-seed results cover 32 sequences and do not establish general language quality. [Full results and all fixed-prompt samples](docs/pilot-results.md).
