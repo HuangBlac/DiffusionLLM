@@ -2,7 +2,7 @@
 
 A small, reproducible exploration of adapting an autoregressive language model to masked denoising, with explicit experimental limits.
 
-**Project deliverables:** a coherent diffusion LLM note and a reproduction of one specific result from the Dream paper, with resources planned against its original settings. The existing 200-step comparison is a preliminary experiment, not the final reproduction deliverable. The particular figure/metric and resource budget remain to be selected. See [deliverables and acceptance criteria](docs/deliverables.md).
+**Project deliverables:** a coherent diffusion LLM note and a complete, reproducible real-text adaptation study. The current question is whether adapting pretrained AR weights produces a usable masked-denoising generator, followed by specific quality/cost or infilling comparisons. The existing 200-step comparison remains preliminary; the project does not claim a full-scale Dream reproduction. See [deliverables](docs/deliverables.md), the [real-text study design](docs/real-text-study.md), and the [opening learning draft](docs/diffusion-llm-note.md). The new study has not started training.
 
 **Current status (2026-11-01):** a real-weight Qwen2.5-0.5B comparison is complete: shifted and same-position denoising, 200 updates each. Held-out denoising loss decreased, while greedy iterative generation remained highly repetitive. No completed 7B adaptation or Dream reproduction is claimed.
 
