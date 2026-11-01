@@ -6,6 +6,7 @@ import json
 import math
 import platform
 import random
+import subprocess
 import time
 from pathlib import Path
 
@@ -201,6 +202,9 @@ def run(alignment, steps, test_examples):
                               "Shift and same-position receive equal data order, masks, steps and token exposure.",
                               "Truncated noise interval: not an estimate of the full diffusion ELBO.",
                               "Original AR CE and denoising CE have different conditioning."]}
+    result["data_manifest_sha256"] = hashlib.sha256((ROOT / "results" / "data_manifest.json").read_bytes()).hexdigest()
+    result["script_sha256"] = hashlib.sha256(Path(__file__).read_bytes()).hexdigest()
+    result["git_commit"] = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip()
     result["attention_check"] = attention_check(model, batch([data["test"][0]], bos))
     evaluation_rows = data["test"][:test_examples]
     result["before"] = evaluate(model, evaluation_rows, bos, alignment)
