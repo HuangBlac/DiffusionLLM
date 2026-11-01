@@ -2,6 +2,8 @@
 
 A small, reproducible exploration of adapting an autoregressive language model to masked denoising, with explicit experimental limits.
 
+**Overall scope:** [training and evaluation plan](docs/project-plan.md). The project includes both our own Qwen2.5-0.5B adaptation study and evaluation of mature pretrained diffusion models. The planned Dream/Qwen7B evaluation does not replace training; Clover-35B-A3B is an optional, unstarted extension.
+
 **Project deliverables:** a coherent diffusion LLM note and a complete, reproducible real-text adaptation study. The current question is whether adapting pretrained AR weights produces a usable masked-denoising generator, followed by specific quality/cost or infilling comparisons. The existing 200-step comparison remains preliminary; the project does not claim a full-scale Dream reproduction. See [deliverables](docs/deliverables.md), the [real-text study design](docs/real-text-study.md), and the [opening learning draft](docs/diffusion-llm-note.md). The new study has not started training.
 
 **Next planned evaluation (2026-11-02):** compare pretrained Dream-v0-Base-7B and Qwen2.5-7B on a fixed HellaSwag subset, with standard candidate scoring and a separately labeled full-ending generation variant. [Protocol and Colab budget](docs/dream-qwen-hellaswag-plan.md). This evaluation has not run; its results will not be presented as our own 7B training outcomes.
