@@ -47,3 +47,16 @@ def test_early_configuration_failure_releases_without_mount_or_gpu(monkeypatch, 
     with pytest.raises(ValueError, match='Unknown mode|P0 locked'):
         exec(compile(source, '<notebook-test>', 'exec'), {})
     assert calls == ['release']
+
+
+def test_transport_and_training_exercise_identical_mount_timeout_policy():
+    """A CPU pass must not certify a different GPU mount timeout."""
+    source = ''.join(build()['cells'][1]['source'])
+    tree = ast.parse(source)
+    call = next(n for n in ast.walk(tree) if isinstance(n, ast.Call)
+                and isinstance(n.func, ast.Attribute) and n.func.attr == 'mount')
+    timeout = next(k.value for k in call.keywords if k.arg == 'timeout_ms')
+    values = [eval(compile(ast.Expression(timeout), '<mount-policy>', 'eval'),
+                   {'MODE': mode, 'MOUNT_TIMEOUT_MS': 600000})
+              for mode in ('transport', 'p0')]
+    assert values[0] == values[1], 'CPU verification and GPU execution use different timeouts'
