@@ -31,5 +31,8 @@
   "p0_cap_cu": 4,
   "recovery_allocation_cu": 8,
   "total_cap_cu": 180,
-  "gpu_p0_launch_requested": true
+  "gpu_p0_launch_requested": true,
+  "gpu_p0_status": "blocked_before_training_by_repeated_drive_mount_failure",
+  "actual_gpu_model_checkpoint_verified": false,
+  "next_paid_run_requires_mount_resolution_and_settled_ledger": true
 }

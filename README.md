@@ -4,6 +4,8 @@
 
 A small, reproducible exploration of adapting an autoregressive language model to masked denoising, with explicit experimental limits.
 
+**A100 follow-up:** two managed attempts stopped at `drive.mount` with `ValueError: mount failed` (about 125 seconds each), before model loading or training. Both released the runtime; paid retries are stopped. The live notebook has been restored to its safe CPU-only default. [Mount-failure evidence and unsettled billing limits](docs/p0-resource-check-results.md).
+
 **Latest P0 status (2026-11-02):** the first attempt verified 20 full-parameter AR updates on A100 (8.71 GiB peak allocated memory), using approximately 0.54 CU. A subsequent attempt verified environment setup only; browser control failed and no new training/replay result was recovered from the saved notebook. The user reported zero active sessions afterward. The retry used approximately 1.28 CU, bringing cumulative P0 use to 1.82 of its 2 CU cap. GPU replay and DLM remain unverified; no checkpoint export is confirmed, and P1 has not started. [Partial results and evidence limits](docs/p0-resource-check-results.md).
 
 **Overall scope:** [training and evaluation plan](docs/project-plan.md). The project includes both our own Qwen2.5-0.5B adaptation study and evaluation of mature pretrained diffusion models. The planned Dream/Qwen7B evaluation does not replace training; Clover-35B-A3B is an optional, unstarted extension.

@@ -1,0 +1,44 @@
+{
+  "date_beijing": "2026-11-02",
+  "status": "stopped_after_two_drive_mount_failures",
+  "cpu_transport_and_external_readback": "passed",
+  "attempts": [
+    {
+      "notebook_sha256": "e0d345b2250403724060b2d1e5976d393f9a277eb8bde3d40e8e4f4dff8ed38f",
+      "execution_count": 1,
+      "error_type": "ValueError",
+      "error": "mount failed",
+      "execution_elapsed_ms": 125201,
+      "training_started": false,
+      "checkpoint_created": false
+    },
+    {
+      "notebook_sha256": "b1955d1c60bd26f94aadb62e3cc4bf366160b77f27eb681b47eb2f33db4e7a63",
+      "execution_count": 1,
+      "error_type": "ValueError",
+      "error": "mount failed",
+      "execution_elapsed_ms": 124981,
+      "training_started": false,
+      "checkpoint_created": false
+    }
+  ],
+  "p0_cap_cu": 4,
+  "previous_p0_cu": 1.82,
+  "first_a100_attempt_displayed_cu": 0.43,
+  "second_a100_attempt_cu": "not_yet_reflected_in_displayed_balance",
+  "displayed_p0_cumulative_cu": 2.25,
+  "second_attempt_must_not_be_counted_as_zero": true,
+  "actual_cumulative_cu": "pending_billing_settlement",
+  "resources": {
+    "active_sessions_after": 0,
+    "cu_per_hour_after": 0,
+    "observed_a100_rate": 6.73
+  },
+  "p1_started": false,
+  "paid_retries_stopped": true,
+  "limitations": [
+    "No model loading or optimizer update was reached in these attempts.",
+    "The browser also reported output JavaScript loading errors; their relation to mount failure is unverified.",
+    "No root cause or successful A100 Drive mount is claimed."
+  ]
+}
