@@ -1,12 +1,13 @@
 """Exercise real child processes and durable files, without CUDA or downloads."""
-import hashlib
 import json
-from pathlib import Path
 import sys
+import threading
+import time
 
 import pytest
 
 from experiments.managed_run import Stage, execute, seconds_available, verify_receipt
+import experiments.managed_run as managed
 
 
 CHILD = r'''
@@ -175,3 +176,68 @@ def test_failure_to_create_durable_root_never_launches_child(make_stage, tmp_pat
     with pytest.raises(FileExistsError):
         execute([make('train')], root, budget_seconds=10, reserve_seconds=.1)
     assert root.read_text() == 'A file blocks the intended directory'
+
+
+def test_invalid_preflight_still_requests_release(make_stage):
+    make, root = make_stage
+    released = []
+    with pytest.raises(ValueError):
+        execute([make('train')], root, budget_seconds=-1,
+                release=lambda: released.append(True))
+    assert released == [True]
+
+
+def test_failed_storage_still_requests_release(make_stage, monkeypatch):
+    make, root = make_stage
+    released = []
+
+    def disk_failure(*args, **kwargs):
+        raise OSError('injected storage failure')
+
+    monkeypatch.setattr(managed, 'atomic_json', disk_failure)
+    with pytest.raises(OSError, match='storage failure'):
+        execute([make('train')], root, budget_seconds=10, reserve_seconds=.1,
+                release=lambda: released.append(True))
+    assert released == [True]
+    assert not (root / 'starts.txt').exists()
+
+
+def test_watchdog_releases_while_drive_write_is_blocked(make_stage, monkeypatch):
+    make, root = make_stage
+    original = managed.atomic_json
+    released = threading.Event()
+    times = []
+
+    def slow_storage(path, value):
+        if (path.name == 'run.json' and value['status'] == 'running'
+                and value['stages'][0]['status'] == 'running'):
+            time.sleep(.5)
+            assert released.is_set(), 'Release must not depend on the blocked write'
+        return original(path, value)
+
+    def release():
+        times.append(time.monotonic())
+        released.set()
+
+    monkeypatch.setattr(managed, 'atomic_json', slow_storage)
+    started = time.monotonic()
+    result = execute([make('train')], root, budget_seconds=.2,
+                     reserve_seconds=.02, release=release)
+    assert result['status'] == 'budget_exhausted'
+    assert len(times) == 1 and times[0] - started < .45
+    assert not (root / 'starts.txt').exists()
+
+
+def test_keyboard_interrupt_is_recorded_and_releases(make_stage, monkeypatch):
+    make, root = make_stage
+    released = []
+
+    def interrupt(*args, **kwargs):
+        raise KeyboardInterrupt('injected interruption')
+
+    monkeypatch.setattr(managed.subprocess, 'Popen', interrupt)
+    with pytest.raises(KeyboardInterrupt):
+        execute([make('train')], root, budget_seconds=10, reserve_seconds=.1,
+                release=lambda: released.append(True))
+    assert released == [True]
+    assert read_status(root)['status'] == 'interrupted'

@@ -1,8 +1,10 @@
 # DiffusionLLM
 
+**Execution repair (2026-11-02):** a [single-cell Colab entry with durable results](docs/managed-colab-workflow.md) is implemented. All 39 local tests pass; the execution manager has 93% statement coverage. CPU cloud transport and outside-runtime readback remain the final gate before GPU training; the entry defaults to CPU and retains cumulative P0 spending.
+
 A small, reproducible exploration of adapting an autoregressive language model to masked denoising, with explicit experimental limits.
 
-**Latest P0 status (2026-11-02):** the full-parameter AR branch completed 20 updates on A100 (8.71 GiB peak allocated memory). The GPU replay check and DLM branch have no completed result. The runtime was released at the user's request, using approximately 0.54 CU; temporary checkpoints were not exported. [Partial results and evidence limits](docs/p0-resource-check-results.md). No further training is running.
+**Latest P0 status (2026-11-02):** the first attempt verified 20 full-parameter AR updates on A100 (8.71 GiB peak allocated memory), using approximately 0.54 CU. A subsequent attempt verified environment setup only; browser control failed and no new training/replay result was recovered from the saved notebook. The user reported zero active sessions afterward. The retry used approximately 1.28 CU, bringing cumulative P0 use to 1.82 of its 2 CU cap. GPU replay and DLM remain unverified; no checkpoint export is confirmed, and P1 has not started. [Partial results and evidence limits](docs/p0-resource-check-results.md).
 
 **Overall scope:** [training and evaluation plan](docs/project-plan.md). The project includes both our own Qwen2.5-0.5B adaptation study and evaluation of mature pretrained diffusion models. The planned Dream/Qwen7B evaluation does not replace training; Clover-35B-A3B is an optional, unstarted extension.
 

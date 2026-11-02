@@ -1,0 +1,34 @@
+{
+  "schema": 1,
+  "kind": "transport_fixture_not_model_training",
+  "status": "completed",
+  "time_utc": "2026-11-02T09:59:09.833818+00:00",
+  "checks": {
+    "automatic_sequence": true,
+    "independent_restore_readback": true,
+    "failure_stops_next_stage": true,
+    "timeout_stops_next_stage": true
+  },
+  "success_artifacts": [
+    {
+      "path": "write.json",
+      "kind": "report",
+      "bytes": 143,
+      "sha256": "d5f5262692db8255d923c2850745654c0603d83bfcbc9ed2bb29815d2691517a"
+    },
+    {
+      "path": "fixture-state.json",
+      "kind": "checkpoint",
+      "bytes": 44,
+      "sha256": "7f4e37bcd452f9cd88a337d733757fb33d89677a87e3634b03ef7f39fad3332f"
+    },
+    {
+      "path": "restore.json",
+      "kind": "report",
+      "bytes": 143,
+      "sha256": "3a63fcb238522c0084d4bef98e50a4bc40aeec006aab85f4fdac711e006c8532"
+    }
+  ],
+  "cloud_readback": "not_yet_verified_from_outside_runtime",
+  "cuda_training_performed": false
+}

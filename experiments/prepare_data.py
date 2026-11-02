@@ -19,6 +19,7 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 def main():
+    (ROOT / 'results').mkdir(parents=True, exist_ok=True)
     model_dir = ROOT / "data" / "model"
     weights = model_dir / "model.safetensors"
     patterns = ["*.json", "*.txt", "*.model", "LICENSE*"]

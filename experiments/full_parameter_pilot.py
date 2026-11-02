@@ -130,11 +130,14 @@ def save_checkpoint(path, model, optimizer, step, order, masks, identity, histor
     """Atomic replacement; include optimizer and RNG rather than weights only."""
     path = Path(path)
     temporary = path.with_suffix(".tmp")
-    torch.save({"model": model.state_dict(), "optimizer": optimizer.state_dict(),
-                "step": step, "order": order.getstate(), "masks": masks.get_state(),
-                "torch_rng": torch.get_rng_state(),
-                "cuda_rng": torch.cuda.get_rng_state_all() if torch.cuda.is_available() else [],
-                "identity": identity, "history": history}, temporary)
+    with temporary.open('wb') as stream:
+        torch.save({"model": model.state_dict(), "optimizer": optimizer.state_dict(),
+                    "step": step, "order": order.getstate(), "masks": masks.get_state(),
+                    "torch_rng": torch.get_rng_state(),
+                    "cuda_rng": torch.cuda.get_rng_state_all() if torch.cuda.is_available() else [],
+                    "identity": identity, "history": history}, stream)
+        stream.flush()
+        os.fsync(stream.fileno())
     os.replace(temporary, path)
 
 

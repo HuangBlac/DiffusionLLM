@@ -35,6 +35,7 @@ def examples(texts, tokenizer, limit):
 
 
 def main():
+    (ROOT / 'results').mkdir(parents=True, exist_ok=True)
     destination = ROOT / "data" / "pipeline-pilot.json"
     tokenizer = AutoTokenizer.from_pretrained(ROOT / "data" / "model", local_files_only=True)
     old = json.loads((ROOT / "results" / "data_manifest.json").read_text(encoding="utf-8"))

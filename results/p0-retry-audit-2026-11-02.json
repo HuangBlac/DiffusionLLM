@@ -1,0 +1,39 @@
+{
+  "date_beijing": "2026-11-02",
+  "status": "stopped_no_new_training_verified",
+  "source_commit": "50bb440",
+  "evidence": "Current notebook fetched through the Google Drive connector; user supplied post-run resource panel text",
+  "notebook_sha256": "7dfc8efaa52e2bf03c94710de8ed54e285f499b7e58c1e8585ddd5a6ea854cab",
+  "saved_notebook_modified_utc": "2026-11-02T08:47:42.557Z",
+  "setup_started_utc": "2026-11-02T08:45:41Z",
+  "setup_seconds": 89.0,
+  "gpu": "NVIDIA A100-SXM4-40GB",
+  "python": "3.11.13",
+  "torch": "2.6.0+cu124",
+  "transformers": "4.57.6",
+  "setup_execution_count": 1,
+  "training_cell_execution_count": null,
+  "training_cell_saved_output": "Historical AR summary from the previous attempt; no new DLM start or completion record",
+  "watchdog_configured_seconds_from_setup": 660,
+  "watchdog_release_observed": false,
+  "resources": {
+    "stop_evidence_source": "user_supplied_resource_panel_text",
+    "active_sessions_after_stop": 0,
+    "cu_rate_after_stop": 0,
+    "cu_rate_during_run": 6.73,
+    "estimated_retry_cu_used_from_displayed_balances": 1.28,
+    "estimated_previous_attempt_cu": 0.54,
+    "estimated_p0_cumulative_cu": 1.82,
+    "stage_cap_cu": 2,
+    "estimated_stage_cu_remaining": 0.18
+  },
+  "checkpoint_export_verified": false,
+  "gpu_restart_authorized_by_this_audit": false,
+  "limitations": [
+    "Saved notebook output can lag cloud execution; absent output does not prove no unsaved computation occurred.",
+    "No new completed training, GPU replay, per-step loss, generation result, or checkpoint export was verified.",
+    "The historical AR 20-step summary must not be counted as a new result.",
+    "The stop state was reported by the user, not independently observed through the browser after control failed.",
+    "P0 remains incomplete; no P1 or judge API was started."
+  ]
+}

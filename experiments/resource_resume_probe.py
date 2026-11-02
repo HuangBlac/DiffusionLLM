@@ -58,7 +58,10 @@ def fingerprints(model, optimizer, order, masks):
 def write_report(path, value):
     path = Path(path)
     temp = path.with_suffix(".json.tmp")
-    temp.write_text(json.dumps(value, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    with temp.open('w', encoding='utf-8') as stream:
+        stream.write(json.dumps(value, ensure_ascii=False, indent=2) + "\n")
+        stream.flush()
+        os.fsync(stream.fileno())
     os.replace(temp, path)
 
 
@@ -152,6 +155,8 @@ def main():
             history.append(stats)
             if step in (1, 5, 10, 15, 19, 20):
                 print(json.dumps({"method": args.method, "phase": args.phase, **stats}), flush=True)
+                report.update(end_step=step, history=history)
+                write_report(report_file, report)
             if step == 19 and args.phase == "train":
                 optimizer.zero_grad(set_to_none=True)
                 report["step19_fingerprints"] = fingerprints(model, optimizer, order, masks)
@@ -159,6 +164,7 @@ def main():
                 save_checkpoint(checkpoint, model, optimizer, step, order, masks, identity, history)
                 report["save_step19_seconds"] = time.monotonic() - tick
                 report["checkpoint_bytes"] = checkpoint.stat().st_size
+                report["checkpoint_sha256"] = sha256(checkpoint)
                 write_report(report_file, report)
         optimizer.zero_grad(set_to_none=True)
         report["train_peak_allocated_gib"] = torch.cuda.max_memory_allocated() / 2**30
