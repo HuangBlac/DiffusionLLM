@@ -1,6 +1,6 @@
 {
   "date_beijing": "2026-11-02",
-  "status": "local_verified_cloud_transport_pending",
+  "status": "local_and_cloud_transport_verified",
   "test_command": "python -s -m coverage run --source=experiments.managed_run -m pytest tests -q",
   "tests_passed": 39,
   "tests_failed": 0,
@@ -14,16 +14,22 @@
   "independent_process_transport_fixture": "completed locally; see managed-transport-local.json",
   "early_notebook_failure_tests_after_cpu_wait_adjustment": "3 passed",
   "review": "Original blocking findings addressed; final Python review found no unresolved blocking issue",
-  "cloud_cpu_transport": "waiting_for_user_Drive_authorization_and_external_readback",
+  "cloud_cpu_transport": "passed_with_external_file_readback",
   "cloud_checkpoint_persistence_verified": false,
   "new_gpu_training_started": false,
   "previous_p0_estimated_cu_used": 1.82,
-  "p0_cap_cu_unchanged": 2,
   "limitations": [
     "Transport fixture state is JSON, not a neural model checkpoint.",
-    "Local tests include a tiny random neural network update/replay, not pretrained 0.5B GPU training.",
-    "Linux process-group termination and cloud Drive persistence still require the actual CPU cloud test.",
-    "The first CPU authorization wait expired; a longer CPU-only wait is configured, without increasing P0 limits.",
+    "Local tests include tiny random-network update/replay, not pretrained 0.5B GPU training.",
+    "New A100 launch is requested; training completion requires real GPU reports.",
     "P0 and P1 checkpoint identity schemas differ; no unchecked cross-entry resume is implemented."
-  ]
+  ],
+  "cloud_fixture_persistence_verified": true,
+  "linux_process_group_termination_verified": true,
+  "resource_release_verified": true,
+  "p0_cap_cu_before_approval": 2,
+  "p0_cap_cu": 4,
+  "recovery_allocation_cu": 8,
+  "total_cap_cu": 180,
+  "gpu_p0_launch_requested": true
 }

@@ -1,0 +1,41 @@
+{
+  "status": "passed",
+  "checks": {
+    "automatic_sequence": true,
+    "independent_restore_readback": true,
+    "failure_stops_next_stage": true,
+    "timeout_stops_next_stage": true,
+    "timed_out_descendant_stopped": true
+  },
+  "artifact_integrity": [
+    {
+      "path": "write.json",
+      "bytes": 143,
+      "sha256": "d5f5262692db8255d923c2850745654c0603d83bfcbc9ed2bb29815d2691517a",
+      "match": true
+    },
+    {
+      "path": "fixture-state.json",
+      "bytes": 44,
+      "sha256": "7f4e37bcd452f9cd88a337d733757fb33d89677a87e3634b03ef7f39fad3332f",
+      "match": true
+    },
+    {
+      "path": "restore.json",
+      "bytes": 143,
+      "sha256": "3a63fcb238522c0084d4bef98e50a4bc40aeec006aab85f4fdac711e006c8532",
+      "match": true
+    }
+  ],
+  "source_bundle_sha256": "40e6e435196c5235558a546a744b8e05deda998a41171f53a9403311453bd55b",
+  "receipt_sha256": "d63e37f227011b5d7f69d97f360a5461a2cb8f7fe9ccc3eb0b85b6d8274f7594",
+  "outside_runtime_readback": true,
+  "model_checkpoint_verified": false,
+  "date_beijing": "2026-11-02",
+  "scope": "CPU JSON fixture; not neural model checkpoint",
+  "resource_panel": {
+    "active_sessions": 0,
+    "cu_per_hour": 0
+  },
+  "estimated_cpu_cu_used": 0
+}
