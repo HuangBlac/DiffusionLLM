@@ -14,7 +14,7 @@ import sys
 import time
 
 from experiments.managed_run import (
-    Stage, atomic_json, digest, execute, seconds_available, utc_now, verify_receipt,
+    Stage, artifact, atomic_json, digest, execute, seconds_available, utc_now, verify_receipt,
 )
 
 
@@ -83,14 +83,59 @@ def transport_checks(root: Path) -> dict:
     }
     if os.name == 'posix':
         checks['timed_out_descendant_stopped'] = descendant_stopped
+    tensor_root = root / 'torch-checkpoint'
+    tensor_stages = [Stage(
+        phase, (sys.executable, '-u', '-m', 'experiments.checkpoint_transport',
+                '--root', str(tensor_root), '--phase', phase),
+        report=f'{phase}.json', checkpoint=checkpoint, maximum_seconds=90,
+        expected={'next_update_equal': True} if phase == 'restore' else {})
+        for phase, checkpoint in [('save', 'checkpoint.pt'), ('restore', 'restored-step2.pt')]]
+    tensor_result = execute(tensor_stages, tensor_root, budget_seconds=180, reserve_seconds=10)
+    tensor_receipt = verify_receipt(tensor_root)
+    checks['torch_checkpoint_fresh_process_restore'] = (
+        tensor_result['status'] == 'completed' and tensor_receipt['verified'])
+    tensor_artifacts = tensor_receipt.get('artifacts', [])
+    if checks['torch_checkpoint_fresh_process_restore']:
+        tensor_artifacts.append(artifact(tensor_root, 'expected-step2.pt', 'checkpoint_reference'))
     summary = {'schema': 1, 'kind': 'transport_fixture_not_model_training',
                'status': 'completed' if all(checks.values()) else 'failed',
                'time_utc': utc_now(), 'checks': checks,
                'success_artifacts': receipt.get('artifacts', []),
+               'torch_checkpoint_artifacts': tensor_artifacts,
                'cloud_readback': 'not_yet_verified_from_outside_runtime',
                'cuda_training_performed': False}
     atomic_json(root / 'transport-receipt.json', summary)
     return summary
+
+
+def p1_stages(root: Path) -> list[Stage]:
+    """One fresh 0->20->200 trajectory per method; checkpoint stays on Drive."""
+    stages = p0_stages(root)[:4]
+    for method in ('ar', 'dlm'):
+        stages.append(Stage(
+            f'{method}-20',
+            (sys.executable, '-u', '-m', 'experiments.full_parameter_pilot',
+             '--method', method, '--steps', '20', '--eval-examples', '8',
+             '--max-seconds', '{max_seconds}', '--output', str(root / method)),
+            report=f'{method}/report-0-20.json', checkpoint=f'{method}/latest.pt',
+            minimum_seconds=180, maximum_seconds=420,
+            expected={'start_step': 0, 'end_step': 20}))
+    stages.append(Stage(
+        'original-ar', (sys.executable, '-u', '-m', 'experiments.full_parameter_pilot',
+                        '--method', 'ar', '--evaluate-only', '--eval-examples', '32',
+                        '--max-seconds', '{max_seconds}', '--output', str(root / 'original-ar')),
+        report='original-ar/report-0-0.json', minimum_seconds=180, maximum_seconds=300,
+        expected={'start_step': 0, 'end_step': 0}))
+    for method in ('dlm', 'ar'):
+        stages.append(Stage(
+            f'{method}-200',
+            (sys.executable, '-u', '-m', 'experiments.full_parameter_pilot',
+             '--method', method, '--steps', '200', '--resume', '--eval-examples', '32',
+             '--max-seconds', '{max_seconds}', '--output', str(root / method)),
+            report=f'{method}/report-20-200.json', checkpoint=f'{method}/latest.pt',
+            minimum_seconds=600, maximum_seconds=1000,
+            expected={'start_step': 20, 'end_step': 200}))
+    return stages
 
 
 def p0_stages(pipeline_root: Path) -> list[Stage]:

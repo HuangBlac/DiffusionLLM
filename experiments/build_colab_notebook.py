@@ -9,13 +9,14 @@ import zipfile
 
 
 ROOT = Path(__file__).resolve().parents[1]
-SOURCES = ('managed_run.py', 'colab_pipeline.py', 'mount_contract.py', 'resource_resume_probe.py',
+SOURCES = ('managed_run.py', 'colab_pipeline.py', 'mount_contract.py', 'checkpoint_transport.py', 'resource_resume_probe.py',
            'full_parameter_pilot.py', 'prepare_data.py', 'prepare_pipeline_pilot.py')
 
 
 CELL = '''# Default: CPU transport check. This cell does not train a model.
 MODE = "transport"
 CAP_CU, SPENT_CU, RATE_CU_HOUR = 2.0, 1.82, 6.73
+RELEASE_RESERVE_CU = 0.5
 # P0 stays locked until an outside-runtime readback has verified this receipt.
 VERIFIED_TRANSPORT_RELATIVE_PATH = None
 VERIFIED_TRANSPORT_SHA256 = None
@@ -32,13 +33,13 @@ def run():
     from datetime import datetime, timezone
     from math import floor, isfinite
     started = time.monotonic()
-    if MODE not in ('transport', 'p0'):
+    if MODE not in ('transport', 'p0', 'p1'):
         raise ValueError('Unknown mode')
     values = (CAP_CU, SPENT_CU, RATE_CU_HOUR)
     if not all(isfinite(v) for v in values) or CAP_CU <= 0 or SPENT_CU < 0 or RATE_CU_HOUR <= 0:
         raise ValueError('Invalid cumulative budget')
-    time_cap = 900 if MODE == 'transport' else floor((CAP_CU-SPENT_CU-.1)*3600/RATE_CU_HOUR)
-    if MODE == 'p0' and (time_cap < 600 or not VERIFIED_TRANSPORT_RELATIVE_PATH
+    time_cap = 900 if MODE == 'transport' else floor((CAP_CU-SPENT_CU-RELEASE_RESERVE_CU)*3600/RATE_CU_HOUR)
+    if MODE != 'transport' and (time_cap < 600 or not VERIFIED_TRANSPORT_RELATIVE_PATH
                          or not VERIFIED_TRANSPORT_SHA256):
         raise ValueError('P0 locked: insufficient cumulative budget or missing external transport verification')
     # Separate process: no Drive I/O, survives a notebook-kernel reset.
@@ -66,7 +67,7 @@ def run():
     sys.path.insert(0, str(work))
     os.chdir(work)
     from experiments.managed_run import atomic_json, digest, execute, utc_now, verify_receipt
-    from experiments.colab_pipeline import p0_stages, require_drive_storage, transport_checks
+    from experiments.colab_pipeline import p0_stages, p1_stages, require_drive_storage, transport_checks
     from experiments.mount_contract import MOUNT_TIMEOUT_MS, mount_contract, require_mount_contract
     policy = mount_contract(inspect.getsource(drive))
     durable_base = Path('/content/drive/MyDrive/DiffusionLLM/runs')
@@ -116,7 +117,8 @@ def run():
         remaining = time_cap - (time.monotonic() - started)
         if remaining < 600:
             raise RuntimeError('Mount used the execution reserve; do not start model preparation')
-        result = execute(p0_stages(run_root), run_root, budget_seconds=remaining,
+        stages = p1_stages(run_root) if MODE == 'p1' else p0_stages(run_root)
+        result = execute(stages, run_root, budget_seconds=remaining,
                          reserve_seconds=90)
         lifecycle['checkpoint_readback'] = verify_receipt(run_root)
         if result['status'] == 'completed' and not lifecycle['checkpoint_readback']['verified']:
