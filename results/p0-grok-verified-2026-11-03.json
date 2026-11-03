@@ -1,0 +1,231 @@
+{
+  "status": "gpu_training_and_replay_verified_from_saved_output",
+  "source_cell_index": 2,
+  "phases": {
+    "dlm-train": {
+      "status": "completed",
+      "returncode": 0,
+      "wall_seconds": 150.0,
+      "end_step": 20,
+      "elapsed_seconds": 140.15272012799994,
+      "train_peak_allocated_gib": 8.683377742767334,
+      "restore_seconds": null,
+      "restored_step19_matches": null,
+      "step20_matches": null,
+      "step20_stats_match": null,
+      "checkpoint_bytes": 5928784372,
+      "watched_parameter_max_change": 0.0001954883337020874,
+      "error": null
+    },
+    "dlm-resume": {
+      "status": "completed",
+      "returncode": 0,
+      "wall_seconds": 105.0,
+      "end_step": 20,
+      "elapsed_seconds": 95.97183579600005,
+      "train_peak_allocated_gib": 8.654263973236084,
+      "restore_seconds": 4.97051478000003,
+      "restored_step19_matches": true,
+      "step20_matches": true,
+      "step20_stats_match": true,
+      "checkpoint_bytes": 5928784564,
+      "watched_parameter_max_change": 0.0001954883337020874,
+      "error": null
+    },
+    "ar-train": {
+      "status": "completed",
+      "returncode": 0,
+      "wall_seconds": 135.0,
+      "end_step": 20,
+      "elapsed_seconds": 126.254957966,
+      "train_peak_allocated_gib": 8.713295936584473,
+      "restore_seconds": null,
+      "restored_step19_matches": null,
+      "step20_matches": null,
+      "step20_stats_match": null,
+      "checkpoint_bytes": 5928772552,
+      "watched_parameter_max_change": 0.00018487311899662018,
+      "error": null
+    },
+    "ar-resume": {
+      "status": "completed",
+      "returncode": 0,
+      "wall_seconds": 105.0,
+      "end_step": 20,
+      "elapsed_seconds": 93.1370181740001,
+      "train_peak_allocated_gib": 8.705848693847656,
+      "restore_seconds": 4.923172521999959,
+      "restored_step19_matches": true,
+      "step20_matches": true,
+      "step20_stats_match": true,
+      "checkpoint_bytes": 5928772744,
+      "watched_parameter_max_change": 0.00018487311899662018,
+      "error": null
+    }
+  },
+  "selected_step_logs": [
+    {
+      "method": "dlm",
+      "phase": "train",
+      "objective": 16.7301207780838,
+      "grad_norm": 598.2037963867188,
+      "input_tokens": 3204,
+      "target_tokens": 1156,
+      "supervised_tokens": 508,
+      "step": 1,
+      "seconds": 5.315996400000017
+    },
+    {
+      "method": "dlm",
+      "phase": "train",
+      "objective": 13.227130651473999,
+      "grad_norm": 1626.7568359375,
+      "input_tokens": 3368,
+      "target_tokens": 1320,
+      "supervised_tokens": 773,
+      "step": 5,
+      "seconds": 3.0280993629999102
+    },
+    {
+      "method": "dlm",
+      "phase": "train",
+      "objective": 6.630833208560944,
+      "grad_norm": 78.65516662597656,
+      "input_tokens": 3749,
+      "target_tokens": 1701,
+      "supervised_tokens": 987,
+      "step": 10,
+      "seconds": 2.9906711639999912
+    },
+    {
+      "method": "dlm",
+      "phase": "train",
+      "objective": 5.922605991363525,
+      "grad_norm": 39.697357177734375,
+      "input_tokens": 3090,
+      "target_tokens": 1042,
+      "supervised_tokens": 595,
+      "step": 15,
+      "seconds": 2.975624856999957
+    },
+    {
+      "method": "dlm",
+      "phase": "train",
+      "objective": 5.715923100709915,
+      "grad_norm": 39.87887954711914,
+      "input_tokens": 3327,
+      "target_tokens": 1279,
+      "supervised_tokens": 620,
+      "step": 19,
+      "seconds": 2.9970748800000138
+    },
+    {
+      "method": "dlm",
+      "phase": "train",
+      "objective": 6.226443648338318,
+      "grad_norm": 40.23725509643555,
+      "input_tokens": 3491,
+      "target_tokens": 1443,
+      "supervised_tokens": 775,
+      "step": 20,
+      "seconds": 3.0896612809999624
+    },
+    {
+      "method": "dlm",
+      "phase": "resume",
+      "objective": 6.226443648338318,
+      "grad_norm": 40.23725509643555,
+      "input_tokens": 3491,
+      "target_tokens": 1443,
+      "supervised_tokens": 775,
+      "step": 20,
+      "seconds": 3.5350437320000765
+    },
+    {
+      "method": "ar",
+      "phase": "train",
+      "objective": 3.395998954772949,
+      "grad_norm": 66.71061706542969,
+      "input_tokens": 3204,
+      "target_tokens": 1156,
+      "supervised_tokens": 1156,
+      "step": 1,
+      "seconds": 3.2713772760000666
+    },
+    {
+      "method": "ar",
+      "phase": "train",
+      "objective": 2.807870179414749,
+      "grad_norm": 38.52615737915039,
+      "input_tokens": 3368,
+      "target_tokens": 1320,
+      "supervised_tokens": 1320,
+      "step": 5,
+      "seconds": 2.996165846000167
+    },
+    {
+      "method": "ar",
+      "phase": "train",
+      "objective": 2.629557728767395,
+      "grad_norm": 16.70880889892578,
+      "input_tokens": 3749,
+      "target_tokens": 1701,
+      "supervised_tokens": 1701,
+      "step": 10,
+      "seconds": 3.0419548390000273
+    },
+    {
+      "method": "ar",
+      "phase": "train",
+      "objective": 2.2997934818267822,
+      "grad_norm": 19.391225814819336,
+      "input_tokens": 3090,
+      "target_tokens": 1042,
+      "supervised_tokens": 1042,
+      "step": 15,
+      "seconds": 3.1437298060000103
+    },
+    {
+      "method": "ar",
+      "phase": "train",
+      "objective": 2.310568854212761,
+      "grad_norm": 13.838140487670898,
+      "input_tokens": 3327,
+      "target_tokens": 1279,
+      "supervised_tokens": 1279,
+      "step": 19,
+      "seconds": 2.961455415999808
+    },
+    {
+      "method": "ar",
+      "phase": "train",
+      "objective": 2.681141197681427,
+      "grad_norm": 17.127962112426758,
+      "input_tokens": 3491,
+      "target_tokens": 1443,
+      "supervised_tokens": 1443,
+      "step": 20,
+      "seconds": 3.1321367999998984
+    },
+    {
+      "method": "ar",
+      "phase": "resume",
+      "objective": 2.681141197681427,
+      "grad_norm": 17.127962112426758,
+      "input_tokens": 3491,
+      "target_tokens": 1443,
+      "supervised_tokens": 1443,
+      "step": 20,
+      "seconds": 3.4165681720000975
+    }
+  ],
+  "full_report_recovered": false,
+  "checkpoint_recovered": false,
+  "p1_resume_ready": false,
+  "limitations": [
+    "P0_DONE is truncated; summaries are not complete training reports.",
+    "Saved stdout cannot replace model and optimizer checkpoint bytes.",
+    "No generation quality or matched AR/DLM loss comparison is established."
+  ],
+  "notebook_sha256": "e93f1be8ae10ada8fedec04c450f4b44ec1f469d6b61161ee0ed4d9099d1a7e1"
+}

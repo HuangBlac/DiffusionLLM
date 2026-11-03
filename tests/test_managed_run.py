@@ -64,7 +64,7 @@ def read_status(root):
     return json.loads((root / 'run.json').read_text(encoding='utf-8'))
 
 
-def test_one_call_runs_train_then_fresh_process_restore_and_persists_evidence(make_stage):
+def test_one_call_runs_train_then_fresh_process_restore_and_persists_evidence(make_stage, capsys):
     make, root = make_stage
     releases = []
     result = execute([make('train'), make('resume')], root,
@@ -78,6 +78,7 @@ def test_one_call_runs_train_then_fresh_process_restore_and_persists_evidence(ma
     assert 'CHILD_FINISHED train' in (root / 'train.log').read_text()
     assert (root / 'resume.pt').read_bytes() == b'checkpoint-train-restored'
     assert verify_receipt(root)['verified'] is True
+    assert 'STAGE_HEARTBEAT train' in capsys.readouterr().out
 
 
 @pytest.mark.parametrize('behavior', ['error', 'partial', 'wrong_digest', 'no_checkpoint'])

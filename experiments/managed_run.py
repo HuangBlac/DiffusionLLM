@@ -191,6 +191,8 @@ def _execute(stages: Sequence[Stage], run_dir: Path, *, budget_seconds: float,
                             atomic_json(root / 'heartbeat.json',
                                         {'stage': stage.name, 'time_utc': utc_now(),
                                          'elapsed_seconds': now - started})
+                            print('STAGE_HEARTBEAT', stage.name,
+                                  round(now - started, 1), flush=True)
                             heartbeat_at = now + heartbeat_seconds
                         time.sleep(min(.1, max(.001, child_deadline - now)))
                     record['returncode'] = process.returncode

@@ -1,5 +1,7 @@
 # DiffusionLLM
 
+**Latest handoff verification (2026-11-03):** saved Colab output now verifies all four real-weight P0 training/replay phases, including exact GPU replay for DLM and AR. Checkpoints were not exported and the runtime was deleted, so direct P1 resume is unavailable. [Verified results and the concrete continuation path](docs/p0-grok-handoff.md). Earlier failure records below remain historical evidence.
+
 **Execution verification (2026-11-02):** the [single-cell Colab flow with durable results](docs/managed-colab-workflow.md) passed the CPU cloud test, including Linux descendant termination. Three saved files were fetched outside the runtime and matched their sizes/SHA-256; zero active sessions and zero CU/hour were verified. All 39 local tests pass; the execution manager has 93% statement coverage. This verifies JSON fixture persistence, not a trained neural checkpoint. The user approved a cumulative P0 cap of 4 CU by transferring 2 CU from the recovery allocation; the 180 CU overall cap is unchanged.
 
 A small, reproducible exploration of adapting an autoregressive language model to masked denoising, with explicit experimental limits.

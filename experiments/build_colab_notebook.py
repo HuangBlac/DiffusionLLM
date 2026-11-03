@@ -9,7 +9,7 @@ import zipfile
 
 
 ROOT = Path(__file__).resolve().parents[1]
-SOURCES = ('managed_run.py', 'colab_pipeline.py', 'resource_resume_probe.py',
+SOURCES = ('managed_run.py', 'colab_pipeline.py', 'mount_contract.py', 'resource_resume_probe.py',
            'full_parameter_pilot.py', 'prepare_data.py', 'prepare_pipeline_pilot.py')
 
 
@@ -20,7 +20,7 @@ CAP_CU, SPENT_CU, RATE_CU_HOUR = 2.0, 1.82, 6.73
 VERIFIED_TRANSPORT_RELATIVE_PATH = None
 VERIFIED_TRANSPORT_SHA256 = None
 
-import base64, hashlib, io, json, os, subprocess, sys, time, uuid, zipfile
+import base64, hashlib, inspect, io, json, os, subprocess, sys, time, uuid, zipfile
 from pathlib import Path
 from google.colab import drive, runtime
 
@@ -67,6 +67,8 @@ def run():
     os.chdir(work)
     from experiments.managed_run import atomic_json, digest, execute, utc_now, verify_receipt
     from experiments.colab_pipeline import p0_stages, require_drive_storage, transport_checks
+    from experiments.mount_contract import MOUNT_TIMEOUT_MS, mount_contract, require_mount_contract
+    policy = mount_contract(inspect.getsource(drive))
     durable_base = Path('/content/drive/MyDrive/DiffusionLLM/runs')
     run_id = MODE + '-' + time.strftime('%Y%m%dT%H%M%SZ', time.gmtime()) + '-' + uuid.uuid4().hex[:8]
     run_root = durable_base / run_id
@@ -79,10 +81,16 @@ def run():
             gpu = subprocess.run(['nvidia-smi', '-L'], capture_output=True, text=True, timeout=5)
         except FileNotFoundError:
             gpu = None
+        if gpu is not None and gpu.returncode != 0:
+            raise RuntimeError('GPU detection failed; cannot certify a CPU transport check')
         if gpu is not None and gpu.returncode == 0 and 'GPU' in gpu.stdout:
             raise RuntimeError('Use a CPU runtime for this transport check')
-    drive.mount('/content/drive', timeout_ms=600000 if MODE == 'transport' else 120000)
+    mount_started = time.monotonic()
+    print('MOUNT_STARTED', policy['timeout_ms'], flush=True)
+    drive.mount('/content/drive', timeout_ms=MOUNT_TIMEOUT_MS)
     mounted = True
+    lifecycle['mount_contract'] = policy
+    lifecycle['mount_elapsed_seconds'] = time.monotonic() - mount_started
     if not os.path.ismount('/content/drive'):
         raise RuntimeError('Drive mount was not established')
     durable_base.mkdir(parents=True, exist_ok=True)
@@ -91,6 +99,8 @@ def run():
     if MODE == 'transport':
         result = transport_checks(run_root)
         result['source_bundle_sha256'] = bundle_sha256
+        result['mount_contract'] = policy
+        result['mount_elapsed_seconds'] = lifecycle['mount_elapsed_seconds']
         atomic_json(run_root / 'transport-receipt.json', result)
     else:
         reference = (durable_base / VERIFIED_TRANSPORT_RELATIVE_PATH).resolve()
@@ -99,10 +109,13 @@ def run():
         if digest(reference) != VERIFIED_TRANSPORT_SHA256:
             raise ValueError('Verified transport receipt has changed')
         receipt = json.loads(reference.read_text())
+        require_mount_contract(receipt, policy)
         if receipt['status'] != 'completed' or receipt['source_bundle_sha256'] != bundle_sha256:
             raise ValueError('Transport check did not verify these exact source bytes')
         require_drive_storage(run_root)
         remaining = time_cap - (time.monotonic() - started)
+        if remaining < 600:
+            raise RuntimeError('Mount used the execution reserve; do not start model preparation')
         result = execute(p0_stages(run_root), run_root, budget_seconds=remaining,
                          reserve_seconds=90)
         lifecycle['checkpoint_readback'] = verify_receipt(run_root)
