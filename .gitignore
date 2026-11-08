@@ -10,3 +10,7 @@ private/
 .env*
 .coverage
 htmlcov/
+
+# Local static-analysis caches
+.mypy_cache/
+.ruff_cache/

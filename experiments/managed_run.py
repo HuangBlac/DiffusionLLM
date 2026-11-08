@@ -142,9 +142,13 @@ def checked_artifacts(stage: Stage, root: Path) -> list[dict]:
 
 
 def _execute(stages: Sequence[Stage], run_dir: Path, *, budget_seconds: float,
-             reserve_seconds: float, heartbeat_seconds: float, started: float) -> dict:
+             reserve_seconds: float, heartbeat_seconds: float, started: float,
+             artifacts_in_parent: bool = False) -> dict:
     root = Path(run_dir).resolve()
-    validate_stages(stages, root)
+    artifact_root = root.parent if artifacts_in_parent else root
+    if artifacts_in_parent and not artifact_root.is_dir():
+        raise ValueError('Resume requires an existing parent artifact directory')
+    validate_stages(stages, artifact_root)
     if (not math.isfinite(budget_seconds) or not math.isfinite(reserve_seconds)
             or budget_seconds <= 0 or not 0 <= reserve_seconds < budget_seconds
             or not math.isfinite(heartbeat_seconds) or heartbeat_seconds <= 0):
@@ -152,6 +156,7 @@ def _execute(stages: Sequence[Stage], run_dir: Path, *, budget_seconds: float,
     root.mkdir(parents=True, exist_ok=False)
     deadline = started + budget_seconds
     state = {'schema': 1, 'status': 'running', 'started_utc': utc_now(),
+             'artifacts_in_parent': artifacts_in_parent,
              'budget_seconds': budget_seconds, 'reserve_seconds': reserve_seconds,
              'stages': [{'name': s.name, 'status': 'not_started'} for s in stages],
              'release': {'status': 'not_requested'}}
@@ -201,7 +206,7 @@ def _execute(stages: Sequence[Stage], run_dir: Path, *, budget_seconds: float,
                 finally:
                     terminate_child(process)
                     os.fsync(log.fileno())
-            record['artifacts'] = checked_artifacts(stage, root)
+                record['artifacts'] = checked_artifacts(stage, artifact_root)
             record.update(status='completed', finished_utc=utc_now())
             atomic_json(status_path, state)
             print(f'STAGE_COMPLETED {stage.name}', flush=True)
@@ -225,7 +230,7 @@ def _execute(stages: Sequence[Stage], run_dir: Path, *, budget_seconds: float,
 
 def execute(stages: Sequence[Stage], run_dir: Path, *, budget_seconds: float,
             reserve_seconds: float = 30, release: Callable[[], None] | None = None,
-            heartbeat_seconds: float = 10) -> dict:
+            heartbeat_seconds: float = 10, artifacts_in_parent: bool = False) -> dict:
     """Run once; release on preflight failure or blocked storage at the deadline.
 
     The watchdog never touches storage. A returned release request does not
@@ -256,7 +261,8 @@ def execute(stages: Sequence[Stage], run_dir: Path, *, budget_seconds: float,
             guard.start()
         result = _execute(stages, run_dir, budget_seconds=budget_seconds,
                           reserve_seconds=reserve_seconds,
-                          heartbeat_seconds=heartbeat_seconds, started=started)
+                          heartbeat_seconds=heartbeat_seconds, started=started,
+                          artifacts_in_parent=artifacts_in_parent)
         return result
     finally:
         if guard is not None:
@@ -273,6 +279,7 @@ def verify_receipt(run_dir: Path) -> dict:
     root = Path(run_dir).resolve()
     try:
         state = json.loads((root / 'run.json').read_text(encoding='utf-8'))
+        artifact_root = root.parent if state.get('artifacts_in_parent', False) else root
         if state.get('status') != 'completed' or not state.get('stages'):
             raise ValueError('Run did not complete')
         latest = {}
@@ -282,7 +289,7 @@ def verify_receipt(run_dir: Path) -> dict:
             for entry in record.get('artifacts', []):
                 latest[entry['path']] = entry
         for entry in latest.values():
-            actual = artifact(root, entry['path'], entry['kind'])
+            actual = artifact(artifact_root, entry['path'], entry['kind'])
             if actual != entry:
                 raise ValueError(f"Artifact changed: {entry['path']}")
         return {'verified': True, 'artifacts': list(latest.values())}

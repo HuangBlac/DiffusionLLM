@@ -1,0 +1,112 @@
+{
+  "date_client": "2026-11-05",
+  "status": "data_and_exploratory_eos_gate_completed",
+  "training_performed": false,
+  "data_status": "development_inputs_prepared_not_formal_test_release",
+  "counts": {
+    "final_continuation": 300,
+    "development": 100,
+    "calibration_sources": 60,
+    "training": 4096
+  },
+  "removed": {
+    "no_eligible_paragraph": 84,
+    "duplicate_paragraph": 7,
+    "duplicate_prefix": 44,
+    "observed_prefix_rows_skipped_before_choice": 7
+  },
+  "tokenizer_sha256": "c0382117ea329cdf097041132f6d735924b697924d6f6fc3945713e96ce87539",
+  "pilot_rows_exact": 544,
+  "dataset_repository": "Salesforce/wikitext",
+  "dataset_revision": "b08601e04326c79dfdd32d625aee71d232d685c3",
+  "candidate_content_verification": {
+    "content_verified": true,
+    "sha256": "acc03f5cfba5ac8ae0bad952a6e3a2c12a4d1ae60d8b309ebb6a1ccbd93b016a",
+    "bytes": 18328107,
+    "proof_version": "1",
+    "version_before_read": "2",
+    "version_after_read": "2",
+    "metadata_version_differs_from_proof": true
+  },
+  "data_artifacts": {
+    "final_continuation": {
+      "examples": 300,
+      "sha256": "7aef18853a7da45cc1f1d3ae6dfc9da158e8892d1427068bef7db987b0a4cc63",
+      "bytes": 792981,
+      "natural_end_examples": 273
+    },
+    "development": {
+      "examples": 100,
+      "sha256": "902aa794853688f2a282d26e0a18d1c8b5acd3f67ccfca7e86e09c30d8428f90",
+      "bytes": 265777,
+      "natural_end_examples": 86
+    },
+    "calibration_sources": {
+      "examples": 60,
+      "sha256": "199c2be071d74233cca35abe7ab82aa5a91b049f871d0d8bbd851b28133caa4f",
+      "bytes": 159704,
+      "natural_end_examples": 57
+    },
+    "training": {
+      "examples": 4096,
+      "sha256": "441fdb02dc692ecef396a32a987a39ed6e9a27e494baaf7fe38e4efb64704b02",
+      "bytes": 10785492,
+      "natural_end_examples": 3725
+    }
+  },
+  "eos_report_sha256": "773efbba1f9bcbd9cc40535f25955b27835d5ea0fcbd36ad6ed9ea39514674b1",
+  "eos_report_bytes": 141044,
+  "eos_sample_count": 24,
+  "eos_by_canvas": {
+    "32": {
+      "n": 8,
+      "eos_positions": [
+        29,
+        29,
+        30,
+        28,
+        29,
+        29,
+        28,
+        28
+      ],
+      "eos_count": 8
+    },
+    "64": {
+      "n": 8,
+      "eos_positions": [
+        58,
+        59,
+        60,
+        58,
+        60,
+        57,
+        58,
+        58
+      ],
+      "eos_count": 8
+    },
+    "128": {
+      "n": 8,
+      "eos_positions": [
+        null,
+        null,
+        null,
+        124,
+        null,
+        22,
+        108,
+        null
+      ],
+      "eos_count": 3
+    }
+  },
+  "limits": [
+    "Exploratory length test; length changes conditioning and number of reveals",
+    "No unique causal attribution or pretrained parameter update",
+    "Near/shared-fragment audit and human judge calibration pending",
+    "Final holdout not released for development",
+    "Final billing/session UI independently unverified due CDP focus timeouts"
+  ],
+  "canvas64_exactly_reproduced_prior_g8": true
+}

@@ -54,10 +54,10 @@ def main():
               'validate 7B adaptation, establish superiority over AR, or demonstrate independent mastery by the repository owner. '
               'A training or held-out loss improvement can coexist with poor iterative generation. '
               'Before scaling, inspect the samples and explain the alignment/loss/sampling implementation, then repeat across seeds and larger held-out sets.', '',
-              'See [protocol](experiment-design.md), [shift raw results](../results/qwen05b-shift-200.json), '
-              '[same-position raw results](../results/qwen05b-same-200.json), and [data manifest](../results/data_manifest.json).', '']
-    (ROOT / 'docs' / 'pilot-results.md').write_text('\n'.join(lines), encoding='utf-8')
-    print('Verified matched conditions and wrote docs/pilot-results.md')
+              'See [protocol](experiment-design.md), [shift raw results](../../results/qwen05b-shift-200.json), '
+              '[same-position raw results](../../results/qwen05b-same-200.json), and [data manifest](../../results/data_manifest.json).', '']
+    (ROOT / 'docs' / 'history' / 'pilot-results.md').write_text('\n'.join(lines), encoding='utf-8')
+    print('Verified matched conditions and wrote docs/history/pilot-results.md')
 
 
 if __name__ == '__main__':

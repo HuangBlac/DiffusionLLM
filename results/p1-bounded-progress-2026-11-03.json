@@ -1,0 +1,51 @@
+{
+  "date_beijing": "2026-11-03",
+  "run_id": "p1-20261103T102930Z-6b4ad195",
+  "status": "budget_exhausted",
+  "completed_stages": [
+    "ar-20",
+    "dlm-20",
+    "original-ar"
+  ],
+  "not_started": [
+    "dlm-200",
+    "ar-200"
+  ],
+  "source_bundle_sha256": "5b753530c2cd5ca3b92dfd48ac2ffbb5acb57b8bf7ae6232eba72ae0e5d5d0a1",
+  "ar20": {
+    "end_step": 20,
+    "ce_before": 2.4286393926211214,
+    "ce_after": 2.1041303511090605,
+    "validation_examples": 8,
+    "checkpoint": {
+      "path": "ar/latest.pt",
+      "kind": "checkpoint",
+      "bytes": 5928776151,
+      "sha256": "5c170f8236cf7f256ab84680787d2b1951b6dea320c644fbe5d7c0ba83cebadc"
+    }
+  },
+  "dlm20": {
+    "end_step": 20,
+    "masked_ce_50_before": 18.6513377680923,
+    "masked_ce_50_after": 5.393928701227361,
+    "validation_examples": 8,
+    "checkpoint": {
+      "path": "dlm/latest.pt",
+      "kind": "checkpoint",
+      "bytes": 5928788039,
+      "sha256": "39ac4315aa0029f6ee6839a4230fdc1bbb52e2a658dce61e86fa98add135b7ae"
+    },
+    "generation_observation": "Inspected continuations still show repeated punctuation or tokens; no independent judge score."
+  },
+  "original_ar": {
+    "validation_examples": 32,
+    "ce_nats": 2.6656166868550435
+  },
+  "report_external_digest_verified": true,
+  "checkpoint_cloud_listing_sizes_match": true,
+  "checkpoint_full_bytes_downloaded_to_local": false,
+  "whole_pipeline_readback_verified": false,
+  "whole_pipeline_readback_reason": "ValueError: Run did not complete",
+  "drive_flush_returned": true,
+  "active_sessions_verified": 0
+}

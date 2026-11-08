@@ -209,8 +209,8 @@ def report(result):
               "Exact restoration of every adapter tensor and reproduction of all three historical samples were verified before measurement. "
               "The new decoder also reproduced the old four-token-per-round outputs. All parameters were frozen, no optimizer was created, "
               "and unchanged checkpoint/adapter values were verified after inference. Raw records contain token IDs, reveal order, confidence and all timing repeats.", "",
-              "[Raw results](../results/sampling-group-size-200.json).", ""]
-    (ROOT / "docs" / "sampling-group-size-results.md").write_text("\n".join(lines), encoding="utf-8")
+              "[Raw results](../../results/sampling-group-size-200.json).", ""]
+    (ROOT / "docs" / "history" / "sampling-group-size-results.md").write_text("\n".join(lines), encoding="utf-8")
 
 
 def main():

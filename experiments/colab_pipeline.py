@@ -45,12 +45,12 @@ def transport_worker(root: Path, action: str) -> None:
                  'checkpoint_sha256': digest(state)})
 
 
-def transport_checks(root: Path) -> dict:
+def transport_checks(root: Path, python: str = sys.executable) -> dict:
     """Exercise success, fresh-process restore, failure and timeout end to end."""
     root.mkdir(parents=True, exist_ok=False)
 
     def stage(directory: Path, action: str) -> Stage:
-        return Stage(action, (sys.executable, '-u', '-m', 'experiments.colab_pipeline',
+        return Stage(action, (python, '-u', '-m', 'experiments.colab_pipeline',
                               '--worker', action, '--worker-root', str(directory)),
                      report=f'{action}.json', checkpoint='fixture-state.json',
                      expected={'fixture_only': True})
@@ -83,9 +83,18 @@ def transport_checks(root: Path) -> dict:
     }
     if os.name == 'posix':
         checks['timed_out_descendant_stopped'] = descendant_stopped
+    parent = root / 'parent-resume'
+    execute([stage(parent, 'write')], parent, budget_seconds=30, reserve_seconds=1)
+    previous_manifest = (parent / 'run.json').read_bytes()
+    control = parent / 'continuation'
+    resumed = execute([stage(parent, 'restore')], control, budget_seconds=30,
+                      reserve_seconds=1, artifacts_in_parent=True)
+    checks['cross_session_parent_artifacts'] = (
+        resumed['status'] == 'completed' and verify_receipt(control)['verified']
+        and previous_manifest == (parent / 'run.json').read_bytes())
     tensor_root = root / 'torch-checkpoint'
     tensor_stages = [Stage(
-        phase, (sys.executable, '-u', '-m', 'experiments.checkpoint_transport',
+        phase, (python, '-u', '-m', 'experiments.checkpoint_transport',
                 '--root', str(tensor_root), '--phase', phase),
         report=f'{phase}.json', checkpoint=checkpoint, maximum_seconds=90,
         expected={'next_update_equal': True} if phase == 'restore' else {})
@@ -101,6 +110,7 @@ def transport_checks(root: Path) -> dict:
                'status': 'completed' if all(checks.values()) else 'failed',
                'time_utc': utc_now(), 'checks': checks,
                'success_artifacts': receipt.get('artifacts', []),
+               'parent_resume_artifacts': verify_receipt(control).get('artifacts', []),
                'torch_checkpoint_artifacts': tensor_artifacts,
                'cloud_readback': 'not_yet_verified_from_outside_runtime',
                'cuda_training_performed': False}
@@ -108,20 +118,20 @@ def transport_checks(root: Path) -> dict:
     return summary
 
 
-def p1_stages(root: Path) -> list[Stage]:
+def p1_stages(root: Path, python: str = sys.executable) -> list[Stage]:
     """One fresh 0->20->200 trajectory per method; checkpoint stays on Drive."""
-    stages = p0_stages(root)[:4]
+    stages = p0_stages(root, python)[:4]
     for method in ('ar', 'dlm'):
         stages.append(Stage(
             f'{method}-20',
-            (sys.executable, '-u', '-m', 'experiments.full_parameter_pilot',
+            (python, '-u', '-m', 'experiments.full_parameter_pilot',
              '--method', method, '--steps', '20', '--eval-examples', '8',
              '--max-seconds', '{max_seconds}', '--output', str(root / method)),
             report=f'{method}/report-0-20.json', checkpoint=f'{method}/latest.pt',
             minimum_seconds=180, maximum_seconds=420,
             expected={'start_step': 0, 'end_step': 20}))
     stages.append(Stage(
-        'original-ar', (sys.executable, '-u', '-m', 'experiments.full_parameter_pilot',
+        'original-ar', (python, '-u', '-m', 'experiments.full_parameter_pilot',
                         '--method', 'ar', '--evaluate-only', '--eval-examples', '32',
                         '--max-seconds', '{max_seconds}', '--output', str(root / 'original-ar')),
         report='original-ar/report-0-0.json', minimum_seconds=180, maximum_seconds=300,
@@ -129,7 +139,7 @@ def p1_stages(root: Path) -> list[Stage]:
     for method in ('dlm', 'ar'):
         stages.append(Stage(
             f'{method}-200',
-            (sys.executable, '-u', '-m', 'experiments.full_parameter_pilot',
+            (python, '-u', '-m', 'experiments.full_parameter_pilot',
              '--method', method, '--steps', '200', '--resume', '--eval-examples', '32',
              '--max-seconds', '{max_seconds}', '--output', str(root / method)),
             report=f'{method}/report-20-200.json', checkpoint=f'{method}/latest.pt',
@@ -138,20 +148,20 @@ def p1_stages(root: Path) -> list[Stage]:
     return stages
 
 
-def p0_stages(pipeline_root: Path) -> list[Stage]:
+def p0_stages(pipeline_root: Path, python: str = sys.executable) -> list[Stage]:
     """Automatic setup -> DLM train/replay -> AR train/replay, no UI queue."""
     stages = [
-        Stage('dependencies', (sys.executable, '-m', 'pip', 'install', '--quiet',
+        Stage('dependencies', (python, '-m', 'pip', 'install', '--quiet',
                                'transformers==4.57.6', 'huggingface-hub>=0.34,<1.0',
                                'pyarrow>=15'), minimum_seconds=30, maximum_seconds=180),
-        Stage('environment', (sys.executable, '-c',
+        Stage('environment', (python, '-c',
                               'import torch; assert torch.__version__.startswith("2.6.0"); '
                               'assert torch.cuda.is_available() and torch.cuda.is_bf16_supported(); '
                               'print(torch.__version__, torch.cuda.get_device_name())'),
               minimum_seconds=15, maximum_seconds=60),
-        Stage('data', (sys.executable, '-u', '-m', 'experiments.prepare_data'),
+        Stage('data', (python, '-u', '-m', 'experiments.prepare_data'),
               minimum_seconds=30, maximum_seconds=180),
-        Stage('pilot-data', (sys.executable, '-u', '-m', 'experiments.prepare_pipeline_pilot'),
+        Stage('pilot-data', (python, '-u', '-m', 'experiments.prepare_pipeline_pilot'),
               minimum_seconds=15, maximum_seconds=60),
     ]
     for method in ('dlm', 'ar'):
@@ -162,7 +172,7 @@ def p0_stages(pipeline_root: Path) -> list[Stage]:
                                 step20_matches=True, step20_stats_match=True)
             stages.append(Stage(
                 f'{method}-{phase}',
-                (sys.executable, '-u', '-m', 'experiments.resource_resume_probe',
+                (python, '-u', '-m', 'experiments.resource_resume_probe',
                  '--method', method, '--phase', phase,
                  '--output', str(pipeline_root / method), '--max-seconds', '{max_seconds}'),
                 report=f'{method}/{phase}.json', checkpoint=f'{method}/latest.pt',

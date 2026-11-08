@@ -64,6 +64,29 @@ def read_status(root):
     return json.loads((root / 'run.json').read_text(encoding='utf-8'))
 
 
+def test_resume_control_keeps_previous_manifest_and_checks_parent_artifacts(make_stage):
+    make, root = make_stage
+    execute([make('train')], root, budget_seconds=10, reserve_seconds=1)
+    previous_manifest = (root / 'run.json').read_bytes()
+    control = root / 'continuation'
+    result = execute([make('resume')], control, budget_seconds=10,
+                     reserve_seconds=1, artifacts_in_parent=True)
+    assert result['status'] == 'completed'
+    assert (root / 'run.json').read_bytes() == previous_manifest
+    assert verify_receipt(control)['verified']
+    (root / 'resume.pt').write_bytes(b'corrupt')
+    assert not verify_receipt(control)['verified']
+
+
+def test_parent_artifacts_still_reject_path_escape(make_stage):
+    make, root = make_stage
+    execute([make('train')], root, budget_seconds=10, reserve_seconds=1)
+    stage = Stage('escape', (sys.executable, '-c', 'pass'), report='../secret.json')
+    with pytest.raises(ValueError):
+        execute([stage], root / 'continuation', budget_seconds=10,
+                reserve_seconds=1, artifacts_in_parent=True)
+
+
 def test_one_call_runs_train_then_fresh_process_restore_and_persists_evidence(make_stage, capsys):
     make, root = make_stage
     releases = []

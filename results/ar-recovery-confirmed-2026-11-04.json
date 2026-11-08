@@ -1,0 +1,26 @@
+{
+  "date_beijing": "2026-11-04",
+  "ar_saved_step": 40,
+  "full_download_fingerprints": {
+    "bytes": 5928777943,
+    "sha256": "3d772f1d3c974adc7dd7fb831cd5618769430b764363f8fb4a204cccae7ac0a4",
+    "md5": "f599a017a250cfec705d423cb47568a5"
+  },
+  "independent_cpu_restore": {
+    "restored": true,
+    "method": "ar",
+    "step": 40,
+    "identity_sha256": "c47b31dc9a260ca9e4adebcee0dcff3b727439fbe6554ec22a3f99b905f71cd6",
+    "model_tensor_count": 291,
+    "optimizer_state_count": 290,
+    "rng_state_restored": true,
+    "inference_finite": true,
+    "training_performed": false,
+    "history_reference_matches": true,
+    "cuda_rng_present": true,
+    "gpu_step_replay_tested": false
+  },
+  "gpu_step_replay_tested": false,
+  "new_publication_pipeline_accepted": false,
+  "publication_test_failure": "RedirectMissingLocation; fixed SDK HTTP 308 handling, v2 real-size acceptance pending"
+}

@@ -35,8 +35,11 @@ def test_notebook_has_one_code_cell_defaults_to_cpu_and_packs_only_reviewed_sour
             assert hashlib.sha256(archive.read(name)).hexdigest() == hashes[name]
 
 
-@pytest.mark.parametrize('mode', ['invalid', 'p0'])
-def test_early_configuration_failure_releases_without_mount_or_gpu(monkeypatch, mode):
+@pytest.mark.parametrize('mode,error,reason', [
+    ('invalid', ValueError, 'Unknown mode'),
+    ('p0', RuntimeError, 'Legacy DriveFS training is disabled'),
+])
+def test_early_configuration_failure_releases_without_mount_or_gpu(monkeypatch, mode, error, reason):
     calls = []
     colab = types.ModuleType('google.colab')
     colab.drive = types.SimpleNamespace(mount=lambda *a, **k: calls.append('mount'))
@@ -44,7 +47,7 @@ def test_early_configuration_failure_releases_without_mount_or_gpu(monkeypatch, 
     monkeypatch.setitem(sys.modules, 'google.colab', colab)
     source = ''.join(build()['cells'][1]['source']).replace(
         'MODE = "transport"', f'MODE = "{mode}"')
-    with pytest.raises(ValueError, match='Unknown mode|P0 locked'):
+    with pytest.raises(error, match=reason):
         exec(compile(source, '<notebook-test>', 'exec'), {})
     assert calls == ['release']
 

@@ -16,6 +16,8 @@ def test_p1_keeps_same_output_and_entry_for_resume(tmp_path):
         assert 'experiments.full_parameter_pilot' in last.command
     assert '--evaluate-only' in stages['original-ar'].command
     assert stages['original-ar'].checkpoint is None
+    assert all(s.command[0] == '/content/isolated/bin/python'
+               for s in p1_stages(tmp_path, '/content/isolated/bin/python'))
 
 
 def test_p1_wall_limit_reserves_half_a_compute_unit():

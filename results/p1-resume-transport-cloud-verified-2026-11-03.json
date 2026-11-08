@@ -1,0 +1,97 @@
+{
+  "schema": 1,
+  "kind": "transport_fixture_not_model_training",
+  "status": "completed",
+  "time_utc": "2026-11-03T11:13:35.207030+00:00",
+  "checks": {
+    "automatic_sequence": true,
+    "independent_restore_readback": true,
+    "failure_stops_next_stage": true,
+    "timeout_stops_next_stage": true,
+    "timed_out_descendant_stopped": true,
+    "cross_session_parent_artifacts": true,
+    "torch_checkpoint_fresh_process_restore": true
+  },
+  "success_artifacts": [
+    {
+      "path": "write.json",
+      "kind": "report",
+      "bytes": 143,
+      "sha256": "d5f5262692db8255d923c2850745654c0603d83bfcbc9ed2bb29815d2691517a"
+    },
+    {
+      "path": "fixture-state.json",
+      "kind": "checkpoint",
+      "bytes": 44,
+      "sha256": "7f4e37bcd452f9cd88a337d733757fb33d89677a87e3634b03ef7f39fad3332f"
+    },
+    {
+      "path": "restore.json",
+      "kind": "report",
+      "bytes": 143,
+      "sha256": "3a63fcb238522c0084d4bef98e50a4bc40aeec006aab85f4fdac711e006c8532"
+    }
+  ],
+  "parent_resume_artifacts": [
+    {
+      "path": "restore.json",
+      "kind": "report",
+      "bytes": 143,
+      "sha256": "3a63fcb238522c0084d4bef98e50a4bc40aeec006aab85f4fdac711e006c8532"
+    },
+    {
+      "path": "fixture-state.json",
+      "kind": "checkpoint",
+      "bytes": 44,
+      "sha256": "7f4e37bcd452f9cd88a337d733757fb33d89677a87e3634b03ef7f39fad3332f"
+    }
+  ],
+  "torch_checkpoint_artifacts": [
+    {
+      "path": "save.json",
+      "kind": "report",
+      "bytes": 358,
+      "sha256": "8974eb53dfae54e1bf5b232ba43b4b198ac3a51482bdb3767a09249fe33fd1c9"
+    },
+    {
+      "path": "checkpoint.pt",
+      "kind": "checkpoint",
+      "bytes": 20536,
+      "sha256": "192b2bed566d7b699534cc9fa9868b0c6cd78cf1caf4e293cb91f249b0ec639e"
+    },
+    {
+      "path": "restore.json",
+      "kind": "report",
+      "bytes": 361,
+      "sha256": "8d5eec937f89f33e0638324ca18a6e6f0b1b79ad87a6eb1d3fb6afdfad7f74e0"
+    },
+    {
+      "path": "restored-step2.pt",
+      "kind": "checkpoint",
+      "bytes": 20536,
+      "sha256": "9b4f588b3a69b8e92ceb048e57b017b1a0b805197bf1c07e75ae9d66da764528"
+    },
+    {
+      "path": "expected-step2.pt",
+      "kind": "checkpoint_reference",
+      "bytes": 20536,
+      "sha256": "2e857bc1664755043579ef4233b3dd4e393a7de0f6be3667c0db2ddba0804a40"
+    }
+  ],
+  "cloud_readback": "verified_from_outside_runtime",
+  "cuda_training_performed": false,
+  "source_bundle_sha256": "a3ad8b571697758e623dc10b7018ad2df8015551ffb4ffc1c46cd7f76a388eae",
+  "mount_contract": {
+    "schema": 1,
+    "timeout_ms": 600000,
+    "driver_sha256": "20e4d2b5a2231bb101d9cd94626c579f8e8216104e694f37fdeea056ac5d77c4",
+    "torch_version": "2.6.0",
+    "transformers_version": "4.57.6",
+    "python_version": "3.13"
+  },
+  "mount_elapsed_seconds": 226.10221541699997,
+  "python_full_version": "3.13.18",
+  "external_artifacts_verified": 10,
+  "receipt_sha256": "13c76c72f2cf65fd80343ba8e295eb8a77af548a9bb2c51bd1dd46ad7301303d",
+  "run_id": "transport-20261103T110529Z-62148de9"
+}

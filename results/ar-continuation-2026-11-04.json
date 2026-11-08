@@ -1,0 +1,83 @@
+{
+  "date_beijing": "2026-11-04",
+  "training_status": "completed",
+  "start_step": 40,
+  "end_step": 200,
+  "history_count": 200,
+  "first_40_history_exact_match": true,
+  "all_history_statistics_excluding_walltime_match_prior_run": true,
+  "eval_examples": 32,
+  "samples_after": 32,
+  "before": {
+    "kind": "conditional_ar_nll",
+    "rates": {
+      "1.0": {
+        "ce_nats": 2.53694065057096,
+        "accuracy": 0.4836309523809524,
+        "tokens": 2688,
+        "examples": 32
+      }
+    },
+    "complete": true
+  },
+  "after": {
+    "kind": "conditional_ar_nll",
+    "rates": {
+      "1.0": {
+        "ce_nats": 3.547484677462351,
+        "accuracy": 0.4486607142857143,
+        "tokens": 2688,
+        "examples": 32
+      }
+    },
+    "complete": true
+  },
+  "peak_allocated_gib": 8.668951988220215,
+  "elapsed_seconds_including_cloud_saves": 1020.0708932829999,
+  "checkpoint": {
+    "status": "independently_restore_verified",
+    "bytes": 5928790935,
+    "sha256": "715acb1438026518e92a965ce4ccc0bb767a4e505b399ba195356fb223786431",
+    "independent_restore": "passed",
+    "manifest_sha256": "69e9edca71d35885ef47f2f5e54692ca44528df02ed0533c4e7a41002ab0f143",
+    "restore": {
+      "cuda_rng_present": true,
+      "gpu_step_replay_tested": false,
+      "history_reference_matches": true,
+      "identity_sha256": "c47b31dc9a260ca9e4adebcee0dcff3b727439fbe6554ec22a3f99b905f71cd6",
+      "inference_finite": true,
+      "method": "ar",
+      "model_tensor_count": 291,
+      "optimizer_state_count": 290,
+      "restored": true,
+      "rng_state_restored": true,
+      "step": 200,
+      "training_performed": false
+    },
+    "fresh_download_seconds": 287.01624272000004
+  },
+  "budget_after_gpu": {
+    "p1_cap_cu": 12,
+    "p1_spent_cu": 10.24,
+    "account_balance_cu": 182.81,
+    "overall_cap_cu": 180,
+    "overall_spent_cu": 16.89
+  },
+  "limitations": [
+    "Development pilot, not final multiseed study",
+    "AR held-out CE worsens; low training loss is not generation success",
+    "CPU restore verifies CUDA RNG bytes are present; no GPU next-step replay performed after final save"
+  ],
+  "final_budget": {
+    "account_balance_cu": 182.8,
+    "p1_cap_cu": 12,
+    "p1_spent_cu": 10.25,
+    "p1_remaining_cu": 1.75,
+    "overall_cap_cu": 180,
+    "overall_spent_cu": 16.9,
+    "overall_remaining_cu": 163.1,
+    "active_sessions": 0,
+    "cu_per_hour": 0,
+    "basis": "Displayed balance delta, not itemized final billing"
+  }
+}

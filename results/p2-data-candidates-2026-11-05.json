@@ -1,0 +1,40 @@
+{
+  "date_client": "2026-11-05",
+  "status": "article_split_candidates_not_frozen",
+  "training_performed": false,
+  "dataset": "Salesforce/wikitext",
+  "revision": "b08601e04326c79dfdd32d625aee71d232d685c3",
+  "source_files": [
+    "wikitext-103-raw-v1/test-00000-of-00001.parquet",
+    "wikitext-103-raw-v1/train-00000-of-00002.parquet",
+    "wikitext-103-raw-v1/train-00001-of-00002.parquet",
+    "wikitext-103-raw-v1/validation-00000-of-00001.parquet",
+    "wikitext-2-raw-v1/test-00000-of-00001.parquet",
+    "wikitext-2-raw-v1/train-00000-of-00001.parquet",
+    "wikitext-2-raw-v1/validation-00000-of-00001.parquet"
+  ],
+  "article_candidate_counts": {
+    "training": 27230,
+    "development": 100,
+    "final_continuation": 300
+  },
+  "removed_records": {
+    "wt2_overlap": 733,
+    "wt2_content_overlap": 0,
+    "empty_article": 0,
+    "duplicate_title": 229,
+    "duplicate_text": 0
+  },
+  "manifest_sha256": "acc03f5cfba5ac8ae0bad952a6e3a2c12a4d1ae60d8b309ebb6a1ccbd93b016a",
+  "manifest_bytes": 18328107,
+  "server_checksum_matches": true,
+  "concurrent_with_cpu_diagnosis": true,
+  "reused_data_cache": true,
+  "next_gate": "Token length/paragraph overlap/calibration eligibility before freezing",
+  "supersedes_manifest_sha256": "ee7f9f2a9eb1cb7f03189f5b8e3a264706b4b9695603dbd231da385ccedd0880",
+  "supersession_reason": "Requires blank rows before and after root headings to keep table legends inside their articles",
+  "limitations": [
+    "Parser-derived candidates; not independently validated benchmark cases",
+    "Token-length, paragraph overlap, near-duplicate and calibration checks remain pending"
+  ]
+}

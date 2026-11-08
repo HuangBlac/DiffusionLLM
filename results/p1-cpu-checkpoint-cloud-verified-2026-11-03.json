@@ -1,0 +1,81 @@
+{
+  "schema": 1,
+  "kind": "transport_fixture_not_model_training",
+  "status": "completed",
+  "time_utc": "2026-11-03T10:10:50.658671+00:00",
+  "checks": {
+    "automatic_sequence": true,
+    "independent_restore_readback": true,
+    "failure_stops_next_stage": true,
+    "timeout_stops_next_stage": true,
+    "timed_out_descendant_stopped": true,
+    "torch_checkpoint_fresh_process_restore": true
+  },
+  "success_artifacts": [
+    {
+      "path": "write.json",
+      "kind": "report",
+      "bytes": 143,
+      "sha256": "d5f5262692db8255d923c2850745654c0603d83bfcbc9ed2bb29815d2691517a"
+    },
+    {
+      "path": "fixture-state.json",
+      "kind": "checkpoint",
+      "bytes": 44,
+      "sha256": "7f4e37bcd452f9cd88a337d733757fb33d89677a87e3634b03ef7f39fad3332f"
+    },
+    {
+      "path": "restore.json",
+      "kind": "report",
+      "bytes": 143,
+      "sha256": "3a63fcb238522c0084d4bef98e50a4bc40aeec006aab85f4fdac711e006c8532"
+    }
+  ],
+  "torch_checkpoint_artifacts": [
+    {
+      "path": "save.json",
+      "kind": "report",
+      "bytes": 358,
+      "sha256": "8974eb53dfae54e1bf5b232ba43b4b198ac3a51482bdb3767a09249fe33fd1c9"
+    },
+    {
+      "path": "checkpoint.pt",
+      "kind": "checkpoint",
+      "bytes": 20536,
+      "sha256": "192b2bed566d7b699534cc9fa9868b0c6cd78cf1caf4e293cb91f249b0ec639e"
+    },
+    {
+      "path": "restore.json",
+      "kind": "report",
+      "bytes": 361,
+      "sha256": "8d5eec937f89f33e0638324ca18a6e6f0b1b79ad87a6eb1d3fb6afdfad7f74e0"
+    },
+    {
+      "path": "restored-step2.pt",
+      "kind": "checkpoint",
+      "bytes": 20536,
+      "sha256": "9b4f588b3a69b8e92ceb048e57b017b1a0b805197bf1c07e75ae9d66da764528"
+    },
+    {
+      "path": "expected-step2.pt",
+      "kind": "checkpoint_reference",
+      "bytes": 20536,
+      "sha256": "2e857bc1664755043579ef4233b3dd4e393a7de0f6be3667c0db2ddba0804a40"
+    }
+  ],
+  "cloud_readback": "verified_from_outside_runtime",
+  "cuda_training_performed": false,
+  "source_bundle_sha256": "5b753530c2cd5ca3b92dfd48ac2ffbb5acb57b8bf7ae6232eba72ae0e5d5d0a1",
+  "mount_contract": {
+    "schema": 1,
+    "timeout_ms": 600000,
+    "driver_sha256": "20e4d2b5a2231bb101d9cd94626c579f8e8216104e694f37fdeea056ac5d77c4",
+    "torch_version": "2.6.0",
+    "transformers_version": "4.57.6",
+    "python_version": "3.13.18"
+  },
+  "mount_elapsed_seconds": 48.97425789700003,
+  "cloud_run": "transport-20261103T100434Z-8f446f78",
+  "receipt_sha256": "efba7aea354db26b69d28fa0716d3d09a85d0eb064c3104d738d36574acd7992",
+  "all_eight_artifacts_verified": true
+}

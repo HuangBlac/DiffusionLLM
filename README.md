@@ -1,35 +1,53 @@
 # DiffusionLLM
 
-**Latest handoff verification (2026-11-03):** saved Colab output now verifies all four real-weight P0 training/replay phases, including exact GPU replay for DLM and AR. Checkpoints were not exported and the runtime was deleted, so direct P1 resume is unavailable. [Verified results and the concrete continuation path](docs/p0-grok-handoff.md). Earlier failure records below remain historical evidence.
+A learning and experimental project adapting Qwen2.5-0.5B Base to masked denoising, with AR controls and a planned mature-model evaluation.
 
-**Execution verification (2026-11-02):** the [single-cell Colab flow with durable results](docs/managed-colab-workflow.md) passed the CPU cloud test, including Linux descendant termination. Three saved files were fetched outside the runtime and matched their sizes/SHA-256; zero active sessions and zero CU/hour were verified. All 39 local tests pass; the execution manager has 93% statement coverage. This verifies JSON fixture persistence, not a trained neural checkpoint. The user approved a cumulative P0 cap of 4 CU by transferring 2 CU from the recovery allocation; the 180 CU overall cap is unchanged.
+## Start here - status recorded through 2026-11-08
 
-A small, reproducible exploration of adapting an autoregressive language model to masked denoising, with explicit experimental limits.
+**Read [project progress and handoff](docs/progress.md) first**, then the [documentation index](docs/README.md). The progress page is a dated evidence log: its newest entries supersede older status snapshots and next-step lists below them.
 
-**A100 follow-up:** two managed attempts stopped at `drive.mount` with `ValueError: mount failed` (about 125 seconds each), before model loading or training. Both released the runtime; paid retries are stopped. The live notebook has been restored to its safe CPU-only default. [Mount-failure evidence and unsettled billing limits](docs/p0-resource-check-results.md).
+The 2026-11-07 entry records a single-seed learning run with AR/DLM each reaching 512 updates, both final checkpoints independently downloaded and CPU-restored with finite inference. The 2026-11-08 entry adds fixed-weight DLM512 diagnostics and report updates, not further training. High-mask prediction difficulty and generated-context degradation coexist; reduced repetition does not establish coherent generation or a quality/speed advantage. CUDA RNG was not GPU-replayed. This is not the planned multi-seed research or a reproduction of the original BYOD recipe.
 
-**Latest P0 status (2026-11-02):** the first attempt verified 20 full-parameter AR updates on A100 (8.71 GiB peak allocated memory), using approximately 0.54 CU. A subsequent attempt verified environment setup only; browser control failed and no new training/replay result was recovered from the saved notebook. The user reported zero active sessions afterward. The retry used approximately 1.28 CU, bringing cumulative P0 use to 1.82 of its 2 CU cap. GPU replay and DLM remain unverified; no checkpoint export is confirmed, and P1 has not started. [Partial results and evidence limits](docs/p0-resource-check-results.md).
+Budget approvals, observed balances and verified model updates are separate evidence. The latest resource snapshot in the progress page is dated 2026-11-08; this documentation cleanup did not recheck live CU balances, billing rates or sessions and did not start compute. The approved total remains 180 CU; the P2 paired trial and the 512-update learning run have separate stage accounting. Large checkpoints remain cloud-side. **Do not run historical P0/P1 notebooks as the current P2 entry.**
 
-**Overall scope:** [training and evaluation plan](docs/project-plan.md). The project includes both our own Qwen2.5-0.5B adaptation study and evaluation of mature pretrained diffusion models. The planned Dream/Qwen7B evaluation does not replace training; Clover-35B-A3B is an optional, unstarted extension.
+## Repository map
 
-**Current next run:** [first-round runbook](docs/first-round-runbook.md), a bounded full-parameter 0.5B AR/DLM development pilot (20 updates for resource/resume checks, then at most 200), with original AR and EOS-aware continuation baselines. DeepSeek Flash is selected for calibrated judging. The new entry point and local correctness tests are distinct from a completed real-weight training run; see [readiness evidence](docs/first-round-readiness.md). First-round limits are now 8 CU within the existing 180 CU, including all earlier P0 attempts, plus at most RMB 3 of the separate RMB 30 judge budget. The currently requested A100 run is P0 only; P1 requires completed GPU evidence.
+| Folder / entry | Purpose |
+| --- | --- |
+| [docs/progress.md](docs/progress.md) | Current-status entry and dated handoff evidence |
+| [docs/README.md](docs/README.md) | Two folders: `current/` for living writeups and `history/` for dated evidence |
+| [experiments/README.md](experiments/README.md) | Script catalog; Python module paths remain unchanged |
+| `tests/` | Unit, fake-integration and bounded process checks; test success is not a cloud experiment result |
+| [results/README.md](results/README.md) | Public measurement files and their explanatory writeups |
+| `notebooks/` | Historical managed P0 notebook; not the current training entry |
+| `data/`, `checkpoints/` | Gitignored local corpus/weights/checkpoints; not reorganized |
+| `private/` | Only `application/`, `reports/`, `runs/` plus root helper scripts; local-only, never auto-publish |
 
-**Project deliverables:** a coherent diffusion LLM note and a complete, reproducible real-text adaptation study. The current question is whether adapting pretrained AR weights produces a usable masked-denoising generator, followed by specific quality/cost or infilling comparisons. The existing 200-step comparison remains preliminary; the project does not claim a full-scale Dream reproduction. See [deliverables](docs/deliverables.md), the [real-text study design](docs/real-text-study.md), and the [opening learning draft](docs/diffusion-llm-note.md). The new study has only the partial P0 run described above.
+Useful next reads: [research and budget](docs/current/project-plan.md), [deliverables](docs/current/deliverables.md), [learning-run specification](docs/current/learning-run-plan-2026-11-06.md), [P2 execution handoff](docs/current/p2-execution-2026-11-06.md), and [learning-note draft](docs/current/diffusion-llm-note.md).
 
-**Planned mature-model evaluation (2026-11-02):** compare pretrained Dream-v0-Base-7B and Qwen2.5-7B on a fixed HellaSwag subset, with standard candidate scoring and a separately labeled full-ending generation variant. [Protocol and Colab budget](docs/dream-qwen-hellaswag-plan.md). This follows the first 0.5B pipeline pilot and has not run; its results will not be presented as our own 7B training outcomes.
+<details>
+<summary>Historical P1/P2 README snapshot (2026-11-06; superseded by later progress entries)</summary>
 
-**Current status (2026-11-01):** a real-weight Qwen2.5-0.5B comparison is complete: shifted and same-position denoising, 200 updates each. Held-out denoising loss decreased, while greedy iterative generation remained highly repetitive. No completed 7B adaptation or Dream reproduction is claimed.
+P1 single-seed full-parameter AR/DLM runs reached 200 updates; AR200 passed independent model/Adam/RNG recovery. Fixed-weight DLM diagnosis completed 80 samples, 8 context trajectories and 24 additional EOS probes. Greedy sampling amplifies repetition; stochastic sampling still does not give reliable coherence.
 
-At 50% masking, held-out CE changed from **17.36 to 5.23** nats for shifted prediction and **15.20 to 5.49** for same-position prediction. These single-seed results cover 32 sequences and do not establish general language quality. [Full results and all fixed-prompt samples](docs/pilot-results.md).
+P2 inputs are prepared in Drive (4096 training / 100 development / 300 reserved continuation / 60 calibration sources). Exact exclusions and 544 old token arrays were verified; near-duplicate audit, human calibration and formal test release remain pending. The paired suffix-policy trial has an approved independent 4 CU cap, within the unchanged 180 CU total. **Local regression passed 213 tests; one existing CPU child-process restore test was deselected after a prior manual interruption and remains unverified. Ruff and source review passed. The Colab notebook was uploaded and its full external byte readback matched the local artifact; its default remains `RUN=False`. No P2 training or model-checkpoint upload has occurred.**
 
-## Experiments
+The last recorded balance, 182.41 CU on 2026-11-05, predates job completion. Current balance, runtime state, actual rate and account-wide sessions remain unknown because browser control is unavailable and `mcporter` is missing. This turn did not start a new GPU and does not establish zero existing sessions or zero total CU use. Large checkpoints remain cloud-side. Do not run historical P0/P1 notebooks as the current P2 entry.
+
+The balance/control limitations above describe that historical snapshot, not a fresh resource check. Later learning-run evidence must not be conflated with completion of the separate P2 suffix-policy trial.
+
+</details>
+
+The following experiment table and reproduction commands describe historical experiments. They do not launch the proposed P2 trial. All work remains subject to the progress page's evidence and budget boundaries.
+
+## Historical experiments
 
 | Experiment | Evidence | What it establishes |
 | --- | --- | --- |
 | 100-token absorbing-mask check and one synthetic GPU update | `results/hardware-2026-10-29/colab-check-results.json` | Empirical masking marginals and a working backward/update path |
 | A100/G4, Qwen2.5-7B-shaped random weights, frozen BF16 base + FP32 LoRA | `results/hardware-2026-10-29/` | Short-run throughput and memory under the tested configuration |
-| Qwen2.5-0.5B pretrained weights: shifted vs same-position denoising | [Protocol](docs/experiment-design.md), [results](docs/pilot-results.md) | Short adaptation reduces masked CE; repetitive generation remains a failure |
-| Fixed 200-step checkpoints: reveal 1 vs 8 tokens per round | [All outputs and measurements](docs/sampling-group-size-results.md) | Smaller reveal groups change repetition patterns but do not resolve degeneration |
+| Qwen2.5-0.5B pretrained weights: shifted vs same-position denoising | [Protocol](docs/history/experiment-design.md), [results](docs/history/pilot-results.md) | Short adaptation reduces masked CE; repetitive generation remains a failure |
+| Fixed 200-step checkpoints: reveal 1 vs 8 tokens per round | [All outputs and measurements](docs/history/sampling-group-size-results.md) | Smaller reveal groups change repetition patterns but do not resolve degeneration |
 
 The hardware measurements used random weights and synthetic tokens. They must not be described as pretrained model training or a Dream reproduction. Colab billing rates were observations on 2026-10-29, not current quotations.
 

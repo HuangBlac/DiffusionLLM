@@ -1,0 +1,143 @@
+{
+  "date_beijing": "2026-11-03",
+  "control_run": "p1-20261103T111743Z-f8c5fd03",
+  "source_run": "p1-20261103T102930Z-6b4ad195",
+  "status": "training_completed_sync_failed",
+  "training_stages_completed": true,
+  "checkpoint_retention_completed": false,
+  "checkpoint_sync_error": "flush_and_unmount failed",
+  "report_external_sha256_verified": true,
+  "checkpoint_in_mount_readback_verified": true,
+  "checkpoint_external_full_hash_verified": false,
+  "ar": {
+    "start_step": 20,
+    "end_step": 200,
+    "before": {
+      "kind": "conditional_ar_nll",
+      "rates": {
+        "1.0": {
+          "ce_nats": 2.48659938006174,
+          "accuracy": 0.4880952380952381,
+          "tokens": 2688,
+          "examples": 32
+        }
+      },
+      "complete": true
+    },
+    "after": {
+      "kind": "conditional_ar_nll",
+      "rates": {
+        "1.0": {
+          "ce_nats": 3.547484677462351,
+          "accuracy": 0.4486607142857143,
+          "tokens": 2688,
+          "examples": 32
+        }
+      },
+      "complete": true
+    },
+    "samples": 32,
+    "elapsed_seconds": 780.103782061,
+    "expected_checkpoint_bytes": 5928790871,
+    "observed_cloud_checkpoint_bytes": 5928777943,
+    "checkpoint_sha256": "b0ca648f8fc8544136d7f2178cc8bb74ff1e9352cf74423c937f6238a33a0378",
+    "cloud_checkpoint_matches_expected": false
+  },
+  "dlm": {
+    "start_step": 20,
+    "end_step": 200,
+    "before": {
+      "kind": "masked_ce_not_nll",
+      "rates": {
+        "0.25": {
+          "ce_nats": 4.304999850325351,
+          "accuracy": 0.2680115273775216,
+          "tokens": 694,
+          "examples": 32
+        },
+        "0.5": {
+          "ce_nats": 5.290587187335058,
+          "accuracy": 0.1699489423778264,
+          "tokens": 1371,
+          "examples": 32
+        },
+        "0.75": {
+          "ce_nats": 6.210785059690709,
+          "accuracy": 0.0979431929480901,
+          "tokens": 2042,
+          "examples": 32
+        },
+        "0.9": {
+          "ce_nats": 6.683470558556049,
+          "accuracy": 0.06973848069738481,
+          "tokens": 2409,
+          "examples": 32
+        },
+        "1.0": {
+          "ce_nats": 7.039295158215931,
+          "accuracy": 0.03794642857142857,
+          "tokens": 2688,
+          "examples": 32
+        }
+      },
+      "complete": true
+    },
+    "after": {
+      "kind": "masked_ce_not_nll",
+      "rates": {
+        "0.25": {
+          "ce_nats": 3.312099890337897,
+          "accuracy": 0.4034582132564842,
+          "tokens": 694,
+          "examples": 32
+        },
+        "0.5": {
+          "ce_nats": 4.431986468136962,
+          "accuracy": 0.3012399708242159,
+          "tokens": 1371,
+          "examples": 32
+        },
+        "0.75": {
+          "ce_nats": 5.514670994092622,
+          "accuracy": 0.1714005876591577,
+          "tokens": 2042,
+          "examples": 32
+        },
+        "0.9": {
+          "ce_nats": 6.325660016735642,
+          "accuracy": 0.1004566210045662,
+          "tokens": 2409,
+          "examples": 32
+        },
+        "1.0": {
+          "ce_nats": 6.906681656837463,
+          "accuracy": 0.050595238095238096,
+          "tokens": 2688,
+          "examples": 32
+        }
+      },
+      "complete": true
+    },
+    "samples": 64,
+    "elapsed_seconds": 1073.4182260169998,
+    "expected_checkpoint_bytes": 5928802759,
+    "observed_cloud_checkpoint_bytes": 5928802759,
+    "checkpoint_sha256": "e14383cba153d088573f1c1ff7c314a808985482a18d6b93e0304e977d8f7ea0",
+    "cloud_checkpoint_size_matches_expected": true
+  },
+  "generation_diagnostics": {
+    "definition": "Mean per-continuation adjacent identical token fraction; EOS excluded using delivered_tokens. Descriptive, not calibrated quality judging.",
+    "rounds16": {
+      "samples": 32,
+      "adjacent_repeat_fraction": 0.7445102340198743,
+      "mean_seconds": 1.281011531531263
+    },
+    "rounds128": {
+      "samples": 32,
+      "adjacent_repeat_fraction": 0.32598364799602964,
+      "mean_seconds": 9.554065489625003
+    }
+  },
+  "judge_api_called": false,
+  "full_multiseed_study_completed": false
+}
