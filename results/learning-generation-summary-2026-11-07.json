@@ -1,0 +1,55 @@
+{
+  "evidence_as_of": "2026-11-08",
+  "description": "512步学习运行生成评价的公开聚合快照；样例为模型生成片段，非原始续文，未经盲评。",
+  "training_seed": 11,
+  "prompt_count": 8,
+  "sampling": "greedy",
+  "hardware": "NVIDIA L4",
+  "precision": "FP32 parameters, BF16 autocast",
+  "metrics_note": "每条件8条固定开发提示；重复率按输出的全部相邻token对或4-gram汇总；耗时按提示平均。AR使用KV cache并于EOS停止，DLM固定128格画布运行全部轮次，输出截到首个EOS。",
+  "results": [
+    {
+      "model": "AR512",
+      "mean_delivered_tokens": 25.75,
+      "eos_count": 8,
+      "adjacent_repeat_percent": 0.0,
+      "repeated_4gram_percent": 3.85,
+      "mean_seconds": 0.912,
+      "generated_fragment": "recording a new album as a surprise for her fans ."
+    },
+    {
+      "model": "DLM512",
+      "reveal_rounds": 16,
+      "mean_delivered_tokens": 19.25,
+      "eos_count": 8,
+      "adjacent_repeat_percent": 37.67,
+      "repeated_4gram_percent": 20.0,
+      "mean_seconds": 0.608,
+      "generated_fragment": "recording recording material for a  22210 . ."
+    },
+    {
+      "model": "DLM512",
+      "reveal_rounds": 32,
+      "mean_delivered_tokens": 17.0,
+      "eos_count": 8,
+      "adjacent_repeat_percent": 12.5,
+      "repeated_4gram_percent": 8.93,
+      "mean_seconds": 1.144,
+      "generated_fragment": "recording recording material for Love Again World the following 01 ."
+    },
+    {
+      "model": "DLM512",
+      "reveal_rounds": 128,
+      "mean_delivered_tokens": 15.12,
+      "eos_count": 8,
+      "adjacent_repeat_percent": 0.88,
+      "repeated_4gram_percent": 3.09,
+      "mean_seconds": 4.433,
+      "generated_fragment": "recording Love Again ."
+    }
+  ],
+  "sources": [
+    "../docs/current/learning-run-plan-2026-11-06.md",
+    "../docs/history/learning-run-results-2026-11-08.md"
+  ]
+}

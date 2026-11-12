@@ -1,0 +1,137 @@
+{
+  "schema_version": 1,
+  "evidence_as_of": "2026-11-08",
+  "prepared_on": "2026-11-09",
+  "title": "AR/DLM 512 步学习运行与 DLM512 诊断",
+  "scope": {
+    "model": "Qwen2.5-0.5B Base",
+    "seed": 11,
+    "train_examples": 4096,
+    "dev_examples": 100,
+    "prefix_tokens": 128,
+    "continuation_tokens": 128,
+    "canvas_tokens": 128,
+    "updates_per_arm": 512,
+    "training_mode": "全参数",
+    "limitations": [
+      "单个训练种子；四个固定开发评价点，未导出完整逐步训练 loss。",
+      "AR 条件 NLL 与 DLM 掩码 CE 的预测目标和条件不同。",
+      "冻结权重诊断使用训练与开发各 32 条样本、8 条上下文提示。",
+      "终点生成仍有退化；现有结果未建立等质量速度优势或单一因果归因。",
+      "P2 成对后缀政策为独立试验，日期化证据中没有已验证真实更新。"
+    ]
+  },
+  "learning_curve": [
+    {
+      "step": 0,
+      "ar_nll": 2.8294534230316257,
+      "dlm_ce_mask50": 17.545895935038672,
+      "dlm_ce_mask100": 19.9684136280739
+    },
+    {
+      "step": 128,
+      "ar_nll": 2.454095756113379,
+      "dlm_ce_mask50": 4.313897666747514,
+      "dlm_ce_mask100": 6.666880394272565
+    },
+    {
+      "step": 256,
+      "ar_nll": 2.5587088181120694,
+      "dlm_ce_mask50": 4.074676136357355,
+      "dlm_ce_mask100": 6.696978330732212
+    },
+    {
+      "step": 512,
+      "ar_nll": 2.706514575693867,
+      "dlm_ce_mask50": 3.8435424118066894,
+      "dlm_ce_mask100": 6.595489325269714
+    }
+  ],
+  "mask_diagnosis": [
+    {
+      "mask_rate": 0.25,
+      "train_ce": 2.3276310984147797,
+      "dev_ce": 2.415512708512804
+    },
+    {
+      "mask_rate": 0.5,
+      "train_ce": 3.488613674650977,
+      "dev_ce": 3.809892329917504
+    },
+    {
+      "mask_rate": 0.75,
+      "train_ce": 4.601593634404174,
+      "dev_ce": 4.925730744039166
+    },
+    {
+      "mask_rate": 0.9,
+      "train_ce": 5.377265481387868,
+      "dev_ce": 5.732580422246179
+    },
+    {
+      "mask_rate": 1.0,
+      "train_ce": 6.146493016593572,
+      "dev_ce": 6.458428897758839
+    }
+  ],
+  "context_probe": [
+    {
+      "revealed_tokens": 16,
+      "generated_minus_reference_ce": 1.7245,
+      "positive_prompts": 8,
+      "total_prompts": 8
+    },
+    {
+      "revealed_tokens": 32,
+      "generated_minus_reference_ce": 2.849,
+      "positive_prompts": 8,
+      "total_prompts": 8
+    },
+    {
+      "revealed_tokens": 48,
+      "generated_minus_reference_ce": 3.6727,
+      "positive_prompts": 8,
+      "total_prompts": 8
+    }
+  ],
+  "milestones": [
+    {
+      "id": "learning-512",
+      "title": "AR 与 DLM 学习运行",
+      "status": "completed",
+      "summary": "两组各完成 512 次全参数更新，并完成固定开发评价。"
+    },
+    {
+      "id": "cpu-recovery",
+      "title": "检查点独立恢复",
+      "status": "completed",
+      "summary": "两份终点独立下载，在 CPU 恢复并通过有限值推理；未作 GPU 随机状态重放。"
+    },
+    {
+      "id": "dlm512-diagnosis",
+      "title": "冻结 DLM512 诊断",
+      "status": "completed",
+      "summary": "固定权重完成遮盖率与配对上下文诊断，无训练更新。"
+    },
+    {
+      "id": "p2-paired",
+      "title": "P2 后缀政策成对试验",
+      "status": "no_verified_updates",
+      "summary": "独立任务；日期化接续材料中没有真实更新或 P2 检查点证据。"
+    }
+  ],
+  "sources": [
+    {
+      "label": "阶段结果与方法",
+      "path": "docs/history/learning-run-results-2026-11-08.md"
+    },
+    {
+      "label": "固定学习运行规格",
+      "path": "docs/current/learning-run-plan-2026-11-06.md"
+    },
+    {
+      "label": "当前状态与接续",
+      "path": "docs/progress.md"
+    }
+  ]
+}

@@ -1,5 +1,7 @@
 # DiffusionLLM
 
+**[阅读项目报告](Project%20Report.md)**（2026-11-11修订） · [已验证进度](docs/progress.md) · [512步学习运行与诊断结果](docs/history/learning-run-results-2026-11-08.md)
+
 A learning and experimental project adapting Qwen2.5-0.5B Base to masked denoising, with AR controls and a planned mature-model evaluation.
 
 ## Start here - status recorded through 2026-11-08
