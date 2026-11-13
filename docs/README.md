@@ -6,6 +6,7 @@ Start with **[current progress and handoff](progress.md)**. Read its newest date
 
 Living scope, learning notes and still-relevant plans/handoffs. A dated plan or passing test is not proof of completed training.
 
+- [Markdown 排版与发布验收](current/reproduction-guide.md)
 - [真实文本续写的DeepSeek裁判方案与预算](current/coherence-judge-plan.md)
 - [Diffusion LLM 项目交付目标](current/deliverables.md)
 - [从自回归权重到掩码扩散语言模型](current/diffusion-llm-note.md)
